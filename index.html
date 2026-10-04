@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexum IT Solutions | Soluciones Tecnológicas & Conectividad</title>
+  <meta name="description" content="Infraestructura, soporte TI, soluciones inteligentes NFC y desarrollo digital.">
+
+  <!-- Tipografía moderna e iconos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #0f1520;
+      --bg-card: rgba(18, 26, 41, 0.75);
+      --border-card: rgba(84, 137, 214, 0.22);
+      --accent-blue: #3b82f6;
+      --accent-cyan: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.18) 0%, transparent 60%),
+        radial-gradient(circle at 10% 90%, rgba(56, 189, 248, 0.08) 0%, transparent 40%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Encabezado */
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .brand-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    /* Menú / Botones de navegación */
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      background: rgba(18, 26, 41, 0.6);
+      border: 1px solid var(--border-card);
+      color: var(--text-muted);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .tab-btn i {
+      font-size: 1.1rem;
+    }
+
+    .tab-btn:hover {
+      color: #ffffff;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 16px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(56, 189, 248, 0.2));
+      border-color: var(--accent-cyan);
+      color: #ffffff;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* Panel de Contenido */
+    .content-area {
+      width: 100%;
+      min-height: 380px;
+    }
+
+    .service-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 34px 32px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .service-panel.active {
+      display: block;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 18px;
+    }
+
+    .panel-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-cyan);
+      font-size: 1.5rem;
+    }
+
+    .panel-header h2 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .panel-header p {
+      color: var(--accent-cyan);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* Mercado meta */
+    .market-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 3px solid var(--accent-cyan);
+      padding: 12px 16px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .market-badge strong {
+      color: #ffffff;
+    }
+
+    /* Lista de Servicios / Productos */
+    .feature-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: border-color 0.2s;
+    }
+
+    .feature-item:hover {
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .feature-item i {
+      color: var(--accent-cyan);
+      margin-top: 4px;
+      font-size: 1rem;
+    }
+
+    .feature-text {
+      color: var(--text-main);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    /* Banner motivacional destacado */
+    .empower-banner {
+      width: 100%;
+      margin-top: 36px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 22px 28px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+    }
+
+    .empower-banner i {
+      font-size: 1.6rem;
+      color: var(--accent-cyan);
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .empower-banner p {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .empower-banner span {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 45px;
+      color: #64748b;
+      font-size: 0.82rem;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .brand-title { font-size: 2rem; }
+      .service-panel { padding: 22px 18px; }
+      .tab-btn { flex: 1 1 calc(50% - 10px); justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Encabezado con Identidad Nexum -->
+    <header>
+      <h1 class="brand-title">Nexum IT Solutions</h1>
+      <p class="brand-subtitle">Infraestructura, Conectividad Inteligente y Transformación Digital</p>
+    </header>
+
+    <!-- Menú de Botones / Pestañas de Servicios -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="tab-btn active" onclick="switchTab(0)" role="tab">
+        <i class="fa-solid fa-server"></i>
+        <span>Nexum Tech</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(1)" role="tab">
+        <i class="fa-solid fa-store"></i>
+        <span>Nexum Business</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(2)" role="tab">
+        <i class="fa-solid fa-id-card-clip"></i>
+        <span>Nexum Pro</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(3)" role="tab">
+        <i class="fa-solid fa-paw"></i>
+        <span>Nexum Pets</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(4)" role="tab">
+        <i class="fa-solid fa-globe"></i>
+        <span>Nexum Web</span>
+      </button>
+    </nav>
+
+    <!-- Zona de Contenido Dinámico -->
+    <main class="content-area">
+      
+      <!-- 1. Nexum Tech -->
+      <section class="service-panel active">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-network-wired"></i></div>
+          <div>
+            <h2>Nexum Tech</h2>
+            <p>Infraestructura y Soporte de Sistemas</p>
+          </div>
+        </div>
+
+        <div class="market-badge">
+          <strong>Mercado enfocado:</strong> Escuelas, despachos contables y legales, consultorios médicos y pequeñas oficinas.
+        </div>
+
+        <ul class="feature-list">
+          <li class="feature-item">
+            <i class="fa-solid fa-check-circle"></i>
+            <span class="feature-text">Mantenimiento preventivo y correctivo especializado de equipo de cómputo.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-check-circle"></i>
+            <span class="feature-text">Configuración y optimización de redes locales (LAN y Wi-Fi corporativo de alta cobertura).</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-check-circle"></i>
+            <span class="feature-text">Administración y respaldo seguro de servidores locales y compartidos.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-check-circle"></i>
+            <span class="feature-text">Pólizas mensuales de soporte técnico y monitoreo continuo.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 2. Nexum Business -->
+      <section class="service-panel">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-shop"></i></div>
+          <div>
+            <h2>Nexum Business</h2>
+            <p>Comercio y Posicionamiento Local</p>
+          </div>
+        </div>
+
+        <div class="market-badge">
+          <strong>Mercado enfocado:</strong> Restaurantes, cafeterías, estéticas, barberías y comercios minoristas.
+        </div>
+
+        <ul class="feature-list">
+          <li class="feature-item">
+            <i class="fa-solid fa-bolt"></i>
+            <span class="feature-text">Placas acrílicas con NFC + QR para captura directa e inmediata de reseñas en Google Maps.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-bolt"></i>
+            <span class="feature-text">Displays y tótems de mostrador para menús digitales interactivos y catálogos de WhatsApp.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-bolt"></i>
+            <span class="feature-text">Enlaces directos a redes sociales y cobros rápidos sin fricción para el cliente.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 3. Nexum Pro -->
+      <section class="service-panel">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div>
+            <h2>Nexum Pro</h2>
+            <p>Identidad y Networking Profesional</p>
+          </div>
+        </div>
+
+        <div class="market-badge">
+          <strong>Mercado enfocado:</strong> Médicos, abogados, agentes de seguros, arquitectos y consultores independientes.
+        </div>
+
+        <ul class="feature-list">
+          <li class="feature-item">
+            <i class="fa-solid fa-address-card"></i>
+            <span class="feature-text">Tarjetas de presentación inteligentes (vCards) con acabados premium en mate, madera o metal.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-address-card"></i>
+            <span class="feature-text">Micrositio de perfil profesional con descarga automática de contacto directo a la libreta telefónica (.vcf).</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-address-card"></i>
+            <span class="feature-text">Portafolios digitales de servicios con actualización en caliente sin cambiar de tarjeta.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 4. Nexum Pets -->
+      <section class="service-panel">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-shield-dog"></i></div>
+          <div>
+            <h2>Nexum Pets</h2>
+            <p>Identificación y Rescate de Mascotas</p>
+          </div>
+        </div>
+
+        <div class="market-badge">
+          <strong>Mercado enfocado:</strong> Dueños de mascotas, clínicas veterinarias y estéticas caninas.
+        </div>
+
+        <ul class="feature-list">
+          <li class="feature-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span class="feature-text">Medallas inteligentes ultraligeras y resistentes al agua con chip NFC integrado y grabado QR de respaldo.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span class="feature-text">Perfil médico en la nube con historial de vacunas, alergias y contacto de emergencia.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span class="feature-text">Botón directo de WhatsApp al dueño y envío de geolocalización al escanear la placa.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 5. Nexum Web -->
+      <section class="service-panel">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-laptop-code"></i></div>
+          <div>
+            <h2>Nexum Web</h2>
+            <p>Digitalización y Micrositios</p>
+          </div>
+        </div>
+
+        <div class="market-badge">
+          <strong>Mercado enfocado:</strong> Clientes que inician con soporte técnico o placas NFC y buscan formalizar y expandir su presencia online.
+        </div>
+
+        <ul class="feature-list">
+          <li class="feature-item">
+            <i class="fa-solid fa-code"></i>
+            <span class="feature-text">Creación y despliegue ágil de landing pages y sitios web informativos de alto impacto.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-code"></i>
+            <span class="feature-text">Catálogos dinámicos conectados en tiempo real a Google Sheets sin configuraciones complejas.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-code"></i>
+            <span class="feature-text">Integración de pasarelas de pago y formularios directos de prospección.</span>
+          </li>
+        </ul>
+      </section>
+
+    </main>
+
+    <!-- Frase Motivacional solicitada -->
+    <div class="empower-banner">
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+      <p>«La tecnología no tiene que ser complicada: diseñamos tu plataforma para que tú mismo tomes el control y actualices tus precios, menús o contactos en segundos, sin depender de nadie.»</p>
+      <span>Tan sencillo como editar una hoja de cálculo desde tu teléfono móvil.</span>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+      Nexum IT Solutions © 2026 · Conectando negocios con el futuro
+    </footer>
+
+  </div>
+
+  <!-- Lógica de navegación del Menú -->
+  <script>
+    function switchTab(index) {
+      const buttons = document.querySelectorAll('.tab-btn');
+      const panels = document.querySelectorAll('.service-panel');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      panels.forEach(panel => panel.classList.remove('active'));
+
+      buttons[index].classList.add('active');
+      panels[index].classList.add('active');
+    }
+  </script>
+</body>
+</html>
