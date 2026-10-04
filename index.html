@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexum IT Solutions | Soluciones Tecnológicas & Conectividad</title>
-  <meta name="description" content="Infraestructura, soporte TI, soluciones inteligentes NFC y desarrollo digital.">
+  <title>Infraestructura, Conectividad Inteligente y Transformación Digital</title>
+  <meta name="description" content="Infraestructura, soporte técnico y soluciones inteligentes de conectividad Nexum.">
 
-  <!-- Tipografía moderna e iconos -->
+  <!-- Fuentes tipográficas e Iconografía -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     :root {
-      --bg-dark: #0f1520;
-      --bg-card: rgba(18, 26, 41, 0.75);
-      --border-card: rgba(84, 137, 214, 0.22);
-      --accent-blue: #3b82f6;
-      --accent-cyan: #38bdf8;
-      --accent-glow: rgba(56, 189, 248, 0.25);
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
+      --bg-dark-top: #0a101d;
+      --bg-dark-bottom: #060a12;
+      --card-bg: rgba(13, 23, 38, 0.78);
+      --card-border: rgba(0, 210, 255, 0.22);
+      --cyan-neon: #00d2ff;
+      --blue-electric: #1e6bf5;
+      --silver-main: #e2e8f0;
+      --silver-muted: #94a3b8;
+      --glow-cyan: 0 0 24px rgba(0, 210, 255, 0.35);
     }
 
     * {
@@ -32,109 +33,149 @@
     }
 
     body {
-      background-color: var(--bg-dark);
+      background-color: var(--bg-dark-top);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.18) 0%, transparent 60%),
-        radial-gradient(circle at 10% 90%, rgba(56, 189, 248, 0.08) 0%, transparent 40%);
-      color: var(--text-main);
+        radial-gradient(ellipse at 50% 8%, rgba(30, 107, 245, 0.28) 0%, transparent 65%),
+        radial-gradient(circle at 15% 85%, rgba(0, 210, 255, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg-dark-top) 0%, var(--bg-dark-bottom) 100%);
+      color: var(--silver-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 20px;
+      padding: 30px 16px 50px;
     }
 
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 920px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* Encabezado */
+    /* ========================================================
+       TOP / HEADER CON LOGOTIPO EMBEBIDO VECTORIAL
+       ======================================================== */
     header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
       text-align: center;
-      margin-bottom: 35px;
     }
 
-    .brand-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.6rem;
-      font-weight: 700;
-      letter-spacing: 2px;
+    .logo-hero-wrapper {
+      width: 100%;
+      max-width: 780px;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Si cuentas con la imagen recortada local, puedes reemplazar el SVG por <img src="logo.png"> */
+    .brand-svg-logo {
+      width: 100%;
+      height: auto;
+      max-height: 120px;
+      filter: drop-shadow(0 6px 18px rgba(0, 210, 255, 0.25));
+    }
+
+    .brand-tagline-sub {
+      margin-top: 14px;
+      font-size: 0.98rem;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
+      color: var(--cyan-neon);
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
     }
 
-    .brand-subtitle {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      letter-spacing: 1px;
+    /* ========================================================
+       LÍNEAS Y MENÚ DE PESTAÑAS (CIRCUITOS / BOTONES)
+       ======================================================== */
+    .circuit-separator {
+      width: 80%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan-neon), transparent);
+      box-shadow: 0 0 12px var(--cyan-neon);
+      margin: 18px 0 28px;
     }
 
-    /* Menú / Botones de navegación */
     .nav-tabs {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 12px;
       width: 100%;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
     .tab-btn {
-      background: rgba(18, 26, 41, 0.6);
-      border: 1px solid var(--border-card);
-      color: var(--text-muted);
-      padding: 12px 20px;
+      background: rgba(14, 25, 42, 0.7);
+      border: 1px solid var(--card-border);
+      color: var(--silver-muted);
+      padding: 13px 20px;
       border-radius: 12px;
       font-size: 0.95rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(8px);
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
     }
 
     .tab-btn i {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
+      color: var(--silver-muted);
+      transition: color 0.3s;
     }
 
     .tab-btn:hover {
       color: #ffffff;
-      border-color: var(--accent-cyan);
-      box-shadow: 0 0 16px var(--accent-glow);
+      border-color: var(--cyan-neon);
+      box-shadow: var(--glow-cyan);
       transform: translateY(-2px);
     }
 
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(56, 189, 248, 0.2));
-      border-color: var(--accent-cyan);
-      color: #ffffff;
-      box-shadow: 0 0 20px var(--accent-glow);
+    .tab-btn:hover i {
+      color: var(--cyan-neon);
     }
 
-    /* Panel de Contenido */
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(30, 107, 245, 0.4), rgba(0, 210, 255, 0.22));
+      border-color: var(--cyan-neon);
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(0, 210, 255, 0.45);
+    }
+
+    .tab-btn.active i {
+      color: var(--cyan-neon);
+      text-shadow: 0 0 8px var(--cyan-neon);
+    }
+
+    /* ========================================================
+       PANEL DE SERVICIOS (CONTENIDO DINÁMICO)
+       ======================================================== */
     .content-area {
       width: 100%;
-      min-height: 380px;
+      min-height: 400px;
     }
 
     .service-panel {
       display: none;
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: 20px;
-      padding: 34px 32px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-      animation: fadeIn 0.4s ease forwards;
+      padding: 34px 30px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(0, 210, 255, 0.03);
+      animation: tabFadeIn 0.35s ease forwards;
     }
 
     .service-panel.active {
@@ -144,45 +185,47 @@
     .panel-header {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
       margin-bottom: 22px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 18px;
     }
 
     .panel-icon {
-      width: 54px;
-      height: 54px;
+      width: 58px;
+      height: 58px;
       border-radius: 14px;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid var(--accent-cyan);
+      background: rgba(0, 210, 255, 0.1);
+      border: 1.5px solid var(--cyan-neon);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent-cyan);
-      font-size: 1.5rem;
+      color: var(--cyan-neon);
+      font-size: 1.6rem;
+      box-shadow: var(--glow-cyan);
     }
 
     .panel-header h2 {
-      font-size: 1.65rem;
+      font-size: 1.7rem;
       font-weight: 700;
       color: #ffffff;
+      letter-spacing: 0.5px;
     }
 
     .panel-header p {
-      color: var(--accent-cyan);
-      font-size: 0.95rem;
+      color: var(--cyan-neon);
+      font-size: 0.96rem;
       font-weight: 600;
     }
 
-    /* Mercado meta */
+    /* Mercado Meta */
     .market-badge {
-      background: rgba(255, 255, 255, 0.05);
-      border-left: 3px solid var(--accent-cyan);
-      padding: 12px 16px;
-      border-radius: 0 10px 10px 0;
+      background: rgba(0, 0, 0, 0.25);
+      border-left: 3px solid var(--cyan-neon);
+      padding: 13px 18px;
+      border-radius: 0 12px 12px 0;
       margin-bottom: 24px;
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       line-height: 1.5;
     }
 
@@ -190,72 +233,88 @@
       color: #ffffff;
     }
 
-    /* Lista de Servicios / Productos */
+    /* Lista de Servicios */
     .feature-list {
       list-style: none;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 13px;
     }
 
     .feature-item {
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.025);
       padding: 14px 18px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.04);
-      transition: border-color 0.2s;
+      transition: all 0.25s ease;
     }
 
     .feature-item:hover {
-      border-color: rgba(56, 189, 248, 0.35);
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(0, 210, 255, 0.4);
+      transform: translateX(4px);
     }
 
     .feature-item i {
-      color: var(--accent-cyan);
+      color: var(--cyan-neon);
       margin-top: 4px;
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
 
     .feature-text {
-      color: var(--text-main);
-      font-size: 0.95rem;
+      color: var(--silver-main);
+      font-size: 0.96rem;
       line-height: 1.45;
     }
 
-    /* Banner motivacional destacado */
+    /* ========================================================
+       BANNER MOTIVACIONAL (AUTONOMÍA / ADMINISTRACIÓN)
+       ======================================================== */
     .empower-banner {
       width: 100%;
       margin-top: 36px;
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(56, 189, 248, 0.15));
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      border-radius: 16px;
-      padding: 22px 28px;
+      background: linear-gradient(135deg, rgba(30, 107, 245, 0.22), rgba(0, 210, 255, 0.16));
+      border: 1.5px solid rgba(0, 210, 255, 0.4);
+      border-radius: 18px;
+      padding: 24px 28px;
       text-align: center;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+      box-shadow: 0 0 30px rgba(0, 210, 255, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .empower-banner::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, #ffffff, transparent);
+      opacity: 0.5;
     }
 
     .empower-banner i {
-      font-size: 1.6rem;
-      color: var(--accent-cyan);
+      font-size: 1.7rem;
+      color: var(--cyan-neon);
       margin-bottom: 10px;
+      text-shadow: 0 0 10px var(--cyan-neon);
       display: inline-block;
     }
 
     .empower-banner p {
-      font-size: 1.05rem;
-      line-height: 1.5;
-      font-weight: 600;
+      font-size: 1.08rem;
+      line-height: 1.55;
+      font-weight: 700;
       color: #ffffff;
+      letter-spacing: 0.2px;
     }
 
     .empower-banner span {
       display: block;
-      margin-top: 4px;
-      font-size: 0.88rem;
-      color: var(--text-muted);
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: var(--silver-muted);
       font-weight: 400;
     }
 
@@ -264,24 +323,19 @@
       margin-top: 45px;
       color: #64748b;
       font-size: 0.82rem;
+      letter-spacing: 0.5px;
       text-align: center;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 600px) {
-      .brand-title { font-size: 2rem; }
+    @media (max-width: 650px) {
+      .tab-btn { flex: 1 1 calc(50% - 12px); justify-content: center; }
       .service-panel { padding: 22px 18px; }
-      .tab-btn { flex: 1 1 calc(50% - 10px); justify-content: center; }
+      .brand-svg-logo { max-height: 90px; }
     }
   </style>
 </head>
@@ -289,13 +343,84 @@
 
   <div class="container">
     
-    <!-- Encabezado con Identidad Nexum -->
+    <!-- TOP: LOGOTIPO OFICIAL NEXUM IT SOLUTIONS E INTEGRACIÓN METÁLICA Y DE CIRCUITOS -->
     <header>
-      <h1 class="brand-title">Nexum IT Solutions</h1>
-      <p class="brand-subtitle">Infraestructura, Conectividad Inteligente y Transformación Digital</p>
+      <div class="logo-hero-wrapper">
+        <!-- Recreación vectorial del emblema y tipografía cromada idéntica a tu diseño original -->
+        <svg class="brand-svg-logo" viewBox="0 0 850 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Degradado metálico plateado / cromo para letras y armadura -->
+            <linearGradient id="chromeGrad" x1="0" y1="0" x2="0" y2="100%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="35%" stop-color="#d1d9e6"/>
+              <stop offset="65%" stop-color="#8a99ad"/>
+              <stop offset="100%" stop-color="#ced8e4"/>
+            </linearGradient>
+
+            <!-- Brillo Neón Cian / Circuito -->
+            <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3.5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- CIRCUITOS LUMINOSOS LATERALES Y TRASEROS -->
+          <g stroke="#00d2ff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" filter="url(#neonGlow)">
+            <!-- Circuitos hacia la izquierda -->
+            <path d="M 40,85 L 110,85" />
+            <path d="M 50,55 L 75,55 L 95,70 L 115,70" />
+            <path d="M 60,115 L 85,115 L 105,100 L 115,100" />
+            <circle cx="38" cy="85" r="3.5" fill="#00d2ff" />
+            <circle cx="48" cy="55" r="3.5" fill="#00d2ff" />
+            <circle cx="58" cy="115" r="3.5" fill="#00d2ff" />
+
+            <!-- Circuitos horizontales conectores hacia el texto -->
+            <path d="M 125,85 L 340,85" />
+            <path d="M 125,60 L 250,60 L 275,45 L 430,45" />
+            <path d="M 125,110 L 250,110 L 275,125 L 470,125" />
+            <path d="M 330,85 L 345,72 L 530,72" />
+            <path d="M 360,85 L 375,98 L 520,98" />
+            <circle cx="432" cy="45" r="3.5" fill="#00d2ff" />
+            <circle cx="532" cy="72" r="3.5" fill="#00d2ff" />
+            <circle cx="522" cy="98" r="3.5" fill="#00d2ff" />
+            <circle cx="472" cy="125" r="3.5" fill="#00d2ff" />
+          </g>
+
+          <!-- EMBLEMA METÁLICO NEXUM (NUDO TECNOLÓGICO Y NÚCLEO) -->
+          <g transform="translate(120, 85)">
+            <!-- Vástagos cardinales -->
+            <rect x="-4" y="-55" width="8" height="110" fill="url(#chromeGrad)" rx="2"/>
+            <rect x="-55" y="-4" width="110" height="8" fill="url(#chromeGrad)" rx="2"/>
+            <circle cx="0" cy="-55" r="6" fill="#8a99ad" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="0" cy="55" r="6" fill="#8a99ad" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="-55" cy="0" r="6" fill="#8a99ad" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="55" cy="0" r="6" fill="#8a99ad" stroke="#fff" stroke-width="1.5"/>
+
+            <!-- Marco entrelazado diamante y escudos -->
+            <rect x="-35" y="-35" width="70" height="70" fill="none" stroke="url(#chromeGrad)" stroke-width="9" rx="7" transform="rotate(45)"/>
+            <rect x="-28" y="-28" width="56" height="56" fill="none" stroke="#253549" stroke-width="4" transform="rotate(45)"/>
+
+            <!-- Esfera Azul Central (Núcleo) -->
+            <circle cx="0" cy="0" r="16" fill="url(#chromeGrad)"/>
+            <circle cx="0" cy="0" r="12" fill="#0b2b4e"/>
+            <circle cx="0" cy="0" r="10" fill="#00d2ff" opacity="0.85" filter="url(#neonGlow)"/>
+            <circle cx="-3" cy="-3" r="3.5" fill="#ffffff" opacity="0.9"/>
+          </g>
+
+          <!-- TEXTO NEXUM IT SOLUTIONS -->
+          <text x="245" y="102" fill="url(#chromeGrad)" font-family="'Space Grotesk', 'Outfit', sans-serif" font-weight="700" font-size="58" letter-spacing="4">NEXUM</text>
+          <text x="495" y="98" fill="#dce6f2" font-family="'Space Grotesk', 'Outfit', sans-serif" font-weight="500" font-size="28" letter-spacing="5.5" opacity="0.92">IT SOLUTIONS</text>
+        </svg>
+      </div>
+
+      <div class="circuit-separator"></div>
+      <p class="brand-tagline-sub">Soluciones Integrales de Infraestructura, Conectividad y Digitalización</p>
     </header>
 
-    <!-- Menú de Botones / Pestañas de Servicios -->
+    <!-- MENÚ DE BOTONES POR SERVICIO -->
     <nav class="nav-tabs" role="tablist">
       <button class="tab-btn active" onclick="switchTab(0)" role="tab">
         <i class="fa-solid fa-server"></i>
@@ -313,7 +438,7 @@
       </button>
 
       <button class="tab-btn" onclick="switchTab(3)" role="tab">
-        <i class="fa-solid fa-paw"></i>
+        <i class="fa-solid fa-shield-dog"></i>
         <span>Nexum Pets</span>
       </button>
 
@@ -323,7 +448,7 @@
       </button>
     </nav>
 
-    <!-- Zona de Contenido Dinámico -->
+    <!-- CONTENIDO DINÁMICO DE CADA LÍNEA DE NEGOCIO -->
     <main class="content-area">
       
       <!-- 1. Nexum Tech -->
@@ -337,25 +462,29 @@
         </div>
 
         <div class="market-badge">
-          <strong>Mercado enfocado:</strong> Escuelas, despachos contables y legales, consultorios médicos y pequeñas oficinas.
+          <strong>Mercado:</strong> Escuelas, despachos, consultorios y pequeñas oficinas.
         </div>
 
         <ul class="feature-list">
           <li class="feature-item">
-            <i class="fa-solid fa-check-circle"></i>
-            <span class="feature-text">Mantenimiento preventivo y correctivo especializado de equipo de cómputo.</span>
+            <i class="fa-solid fa-microchip"></i>
+            <span class="feature-text">Mantenimiento preventivo y correctivo de equipo de cómputo.</span>
           </li>
           <li class="feature-item">
-            <i class="fa-solid fa-check-circle"></i>
-            <span class="feature-text">Configuración y optimización de redes locales (LAN y Wi-Fi corporativo de alta cobertura).</span>
+            <i class="fa-solid fa-wifi"></i>
+            <span class="feature-text">Configuración y optimización de redes locales (LAN y Wi-Fi de oficina).</span>
           </li>
           <li class="feature-item">
-            <i class="fa-solid fa-check-circle"></i>
-            <span class="feature-text">Administración y respaldo seguro de servidores locales y compartidos.</span>
+            <i class="fa-solid fa-hard-drive"></i>
+            <span class="feature-text">Administración y respaldo de información y servidores.</span>
           </li>
           <li class="feature-item">
-            <i class="fa-solid fa-check-circle"></i>
-            <span class="feature-text">Pólizas mensuales de soporte técnico y monitoreo continuo.</span>
+            <i class="fa-solid fa-clipboard-check"></i>
+            <span class="feature-text">Pólizas mensuales de soporte técnico.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-clipboard-check"></i>
+            <span class="feature-text">Reparación y venta de equipo de computo, accesorios y consumibles.</span>
           </li>
         </ul>
       </section>
@@ -363,7 +492,7 @@
       <!-- 2. Nexum Business -->
       <section class="service-panel">
         <div class="panel-header">
-          <div class="panel-icon"><i class="fa-solid fa-shop"></i></div>
+          <div class="panel-icon"><i class="fa-solid fa-store"></i></div>
           <div>
             <h2>Nexum Business</h2>
             <p>Comercio y Posicionamiento Local</p>
@@ -371,21 +500,21 @@
         </div>
 
         <div class="market-badge">
-          <strong>Mercado enfocado:</strong> Restaurantes, cafeterías, estéticas, barberías y comercios minoristas.
+          <strong>Mercado:</strong> Restaurantes, cafeterías, estéticas, barberías y comercios minoristas.
         </div>
 
         <ul class="feature-list">
           <li class="feature-item">
-            <i class="fa-solid fa-bolt"></i>
-            <span class="feature-text">Placas acrílicas con NFC + QR para captura directa e inmediata de reseñas en Google Maps.</span>
+            <i class="fa-solid fa-nfc-symbol"></i>
+            <span class="feature-text">Placas acrílicas con NFC + QR para captura directa de reseñas en Google Maps.</span>
+          </li>
+          <li class="feature-item">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span class="feature-text">Displays y tótems de mostrador para menús y catálogos digitales.</span>
           </li>
           <li class="feature-item">
             <i class="fa-solid fa-bolt"></i>
-            <span class="feature-text">Displays y tótems de mostrador para menús digitales interactivos y catálogos de WhatsApp.</span>
-          </li>
-          <li class="feature-item">
-            <i class="fa-solid fa-bolt"></i>
-            <span class="feature-text">Enlaces directos a redes sociales y cobros rápidos sin fricción para el cliente.</span>
+            <span class="feature-text">Enlaces directos a redes sociales, whatsapp y cobros rápidos sin fricción.</span>
           </li>
         </ul>
       </section>
@@ -393,7 +522,7 @@
       <!-- 3. Nexum Pro -->
       <section class="service-panel">
         <div class="panel-header">
-          <div class="panel-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="panel-icon"><i class="fa-solid fa-id-card-clip"></i></div>
           <div>
             <h2>Nexum Pro</h2>
             <p>Identidad y Networking Profesional</p>
@@ -401,21 +530,21 @@
         </div>
 
         <div class="market-badge">
-          <strong>Mercado enfocado:</strong> Médicos, abogados, agentes de seguros, arquitectos y consultores independientes.
+          <strong>Mercado:</strong> Profesionistas y consultores independientes.
         </div>
 
         <ul class="feature-list">
           <li class="feature-item">
-            <i class="fa-solid fa-address-card"></i>
-            <span class="feature-text">Tarjetas de presentación inteligentes (vCards) con acabados premium en mate, madera o metal.</span>
+            <i class="fa-solid fa-credit-card"></i>
+            <span class="feature-text">Tarjetas de presentación inteligentes (vCards).</span>
           </li>
           <li class="feature-item">
-            <i class="fa-solid fa-address-card"></i>
-            <span class="feature-text">Micrositio de perfil profesional con descarga automática de contacto directo a la libreta telefónica (.vcf).</span>
+            <i class="fa-solid fa-mobile-screen-button"></i>
+            <span class="feature-text">Micrositio de perfil profesional con descarga automática de contacto a la libreta telefónica (.vcf).</span>
           </li>
           <li class="feature-item">
-            <i class="fa-solid fa-address-card"></i>
-            <span class="feature-text">Portafolios digitales de servicios con actualización en caliente sin cambiar de tarjeta.</span>
+            <i class="fa-solid fa-arrows-rotate"></i>
+            <span class="feature-text">Portafolios digitales de servicios actualizables en tiempo real.</span>
           </li>
         </ul>
       </section>
@@ -423,7 +552,7 @@
       <!-- 4. Nexum Pets -->
       <section class="service-panel">
         <div class="panel-header">
-          <div class="panel-icon"><i class="fa-solid fa-shield-dog"></i></div>
+          <div class="panel-icon"><i class="fa-solid fa-paw"></i></div>
           <div>
             <h2>Nexum Pets</h2>
             <p>Identificación y Rescate de Mascotas</p>
@@ -431,21 +560,17 @@
         </div>
 
         <div class="market-badge">
-          <strong>Mercado enfocado:</strong> Dueños de mascotas, clínicas veterinarias y estéticas caninas.
+          <strong>Mercado:</strong> Dueños de mascotas, clínicas veterinarias y estéticas caninas.
         </div>
 
         <ul class="feature-list">
           <li class="feature-item">
             <i class="fa-solid fa-shield-halved"></i>
-            <span class="feature-text">Medallas inteligentes ultraligeras y resistentes al agua con chip NFC integrado y grabado QR de respaldo.</span>
+            <span class="feature-text">Medallas inteligentes ultraligeras y resistentes al agua con chip NFC integrado.</span>
           </li>
           <li class="feature-item">
-            <i class="fa-solid fa-shield-halved"></i>
-            <span class="feature-text">Perfil médico en la nube con historial de vacunas, alergias y contacto de emergencia.</span>
-          </li>
-          <li class="feature-item">
-            <i class="fa-solid fa-shield-halved"></i>
-            <span class="feature-text">Botón directo de WhatsApp al dueño y envío de geolocalización al escanear la placa.</span>
+            <i class="fa-solid fa-notes-medical"></i>
+            <span class="feature-text">Perfil médico en la nube: vacunas, alergias, botón directo de WhatsApp al dueño.</span>
           </li>
         </ul>
       </section>
@@ -453,7 +578,7 @@
       <!-- 5. Nexum Web -->
       <section class="service-panel">
         <div class="panel-header">
-          <div class="panel-icon"><i class="fa-solid fa-laptop-code"></i></div>
+          <div class="panel-icon"><i class="fa-solid fa-globe"></i></div>
           <div>
             <h2>Nexum Web</h2>
             <p>Digitalización y Micrositios</p>
@@ -461,42 +586,42 @@
         </div>
 
         <div class="market-badge">
-          <strong>Mercado enfocado:</strong> Clientes que inician con soporte técnico o placas NFC y buscan formalizar y expandir su presencia online.
+          <strong>Mercado:</strong> Clientes que buscan formalizar su presencia online.
         </div>
 
         <ul class="feature-list">
           <li class="feature-item">
             <i class="fa-solid fa-code"></i>
-            <span class="feature-text">Creación y despliegue ágil de landing pages y sitios web informativos de alto impacto.</span>
+            <span class="feature-text">Creación y despliegue de landing pages y sitios web informativos.</span>
           </li>
           <li class="feature-item">
-            <i class="fa-solid fa-code"></i>
-            <span class="feature-text">Catálogos dinámicos conectados en tiempo real a Google Sheets sin configuraciones complejas.</span>
+            <i class="fa-solid fa-table"></i>
+            <span class="feature-text">Catálogos dinámicos conectados a Google Sheets.</span>
           </li>
           <li class="feature-item">
-            <i class="fa-solid fa-code"></i>
-            <span class="feature-text">Integración de pasarelas de pago y formularios directos de prospección.</span>
+            <i class="fa-solid fa-envelope-open-text"></i>
+            <span class="feature-text">Integración de pasarelas y formularios de contacto.</span>
           </li>
         </ul>
       </section>
 
     </main>
 
-    <!-- Frase Motivacional solicitada -->
+    <!-- BANNER CON FRASE MOTIVACIONAL DE AUTONOMÍA -->
     <div class="empower-banner">
-      <i class="fa-solid fa-wand-magic-sparkles"></i>
-      <p>«La tecnología no tiene que ser complicada: diseñamos tu plataforma para que tú mismo tomes el control y actualices tus precios, menús o contactos en segundos, sin depender de nadie.»</p>
-      <span>Tan sencillo como editar una hoja de cálculo desde tu teléfono móvil.</span>
+      <i class="fa-solid fa-sliders"></i>
+      <p>«Tú tienes el control total: creamos soluciones digitales tan intuitivas que podrás actualizar tus propios precios, menús, productos y datos de contacto en segundos, directo desde tu celular y sin depender de técnicos.»</p>
+      <span>Fácil, autónomo y diseñado a la medida de tu negocio.</span>
     </div>
 
-    <!-- Pie de página -->
+    <!-- PIE DE PÁGINA -->
     <footer>
-      Nexum IT Solutions © 2026 · Conectando negocios con el futuro
+      Nexum IT Solutions © 2026 · Conectividad y Soluciones Digitales
     </footer>
 
   </div>
 
-  <!-- Lógica de navegación del Menú -->
+  <!-- SCRIPT DE NAVEGACIÓN -->
   <script>
     function switchTab(index) {
       const buttons = document.querySelectorAll('.tab-btn');
