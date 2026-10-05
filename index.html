@@ -1278,6 +1278,24 @@
       gridNfc.classList.remove('active');
     }
   }
+  function enviarContacto(e) {
+  e.preventDefault();
+  
+  const nombre = document.getElementById('landing-nombre').value.trim();
+  const email = document.getElementById('landing-email').value.trim();
+  const tel = document.getElementById('landing-tel').value.trim();
+  const mensaje = document.getElementById('landing-mensaje').value.trim();
+
+  // Construye el mensaje listo para enviártelo a tu WhatsApp
+  const textoWhatsApp = `¡Hola! Me gustaría cotizar una solución digital a medida.%0A%0A` +
+    `*Nombre/Negocio:* ${encodeURIComponent(nombre)}%0A` +
+    `*Email:* ${encodeURIComponent(email)}%0A` +
+    `*Teléfono:* ${encodeURIComponent(tel)}%0A` +
+    `*Detalle de necesidad:* ${encodeURIComponent(mensaje)}`;
+
+  const numeroWhatsApp = "5215628470586"; // Reemplaza por tu número
+  window.open(`https://wa.me/${numeroWhatsApp}?text=${textoWhatsApp}`, '_blank');
+}
 </script>
 
     <!-- ================= ESTILOS CSS ================= -->
