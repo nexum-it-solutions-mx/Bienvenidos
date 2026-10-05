@@ -778,7 +778,7 @@
           Platícanos directamente qué tienes en mente y armamos tu propuesta personalizada hoy mismo:
         </p>
 
-        <a href="https://wa.me/521XXXXXXXXXX?text=Hola,%20quisiera%20cotizar%20una%20landing%20page%20o%20men%C3%BA%20digital%20a%20la%20medida%20de%20mi%20negocio." target="_blank" class="btn-whatsapp-quote">
+        <a href="https://wa.me/525628470586?text=Hola,%20quisiera%20cotizar%20una%20landing%20page%20o%20men%C3%BA%20digital%20a%20la%20medida%20de%20mi%20negocio." target="_blank" class="btn-whatsapp-quote">
           <span class="wa-icon">💬</span>
           <span>Cotizar por WhatsApp a tu Medida</span>
         </a>
@@ -1279,22 +1279,26 @@
     }
   }
   function enviarContacto(e) {
-  e.preventDefault();
+  e.preventDefault(); // Evita que la página se recargue
   
   const nombre = document.getElementById('landing-nombre').value.trim();
   const email = document.getElementById('landing-email').value.trim();
   const tel = document.getElementById('landing-tel').value.trim();
   const mensaje = document.getElementById('landing-mensaje').value.trim();
 
-  // Construye el mensaje listo para enviártelo a tu WhatsApp
-  const textoWhatsApp = `¡Hola! Me gustaría cotizar una solución digital a medida.%0A%0A` +
+  // Aquí se arma el mensaje con los datos que el cliente llenó en el formulario
+  const textoWhatsApp = 
+    `¡Hola! Me gustaría cotizar una solución digital a medida.%0A%0A` +
     `*Nombre/Negocio:* ${encodeURIComponent(nombre)}%0A` +
     `*Email:* ${encodeURIComponent(email)}%0A` +
     `*Teléfono:* ${encodeURIComponent(tel)}%0A` +
     `*Detalle de necesidad:* ${encodeURIComponent(mensaje)}`;
 
-  const numeroWhatsApp = "5215628470586"; // Reemplaza por tu número
-  window.open(`https://wa.me/${numeroWhatsApp}?text=${textoWhatsApp}`, '_blank');
+  // Tu número ya configurado (52 + 5628470586)
+  const numeroWhatsApp = "525628470586"; 
+
+  // Abre WhatsApp directamente con los datos ya escritos en el chat
+  window.location.href = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${textoWhatsApp}`;
 }
 </script>
 
