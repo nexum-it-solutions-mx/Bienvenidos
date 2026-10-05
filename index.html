@@ -619,9 +619,14 @@
   <div class="pricing-container">
     <div class="pricing-header">
       <span class="pricing-badge">Tarifas Transparentes</span>
-      <h2>Soluciones y Precios</h2>
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button type="button" class="pricing-toggle-btn" id="btnTogglePrecios" onclick="toggleModuloPrecios()">
+      <span>Soluciones y Precios</span>
+      <span class="toggle-icon" id="toggleIcon">▼</span>
+    </button>
+</div>
       <p>Digitaliza la presencia de tu negocio con tecnología NFC, QR dinámicos y landings de alto impacto sin rentas mensuales forzosas.</p>
-      
+<div id="pricingContent" class="pricing-collapsible">      
       <!-- Selector de categoría -->
       <div class="pricing-tabs">
         <button class="tab-btn active" onclick="switchPricingTab('nfc')">Placas Smart NFC & QR</button>
@@ -783,7 +788,7 @@
     </div>
   </div>
 </section>
-
+</div>
 <!-- ================= ESTILOS CSS ================= -->
 <style>
   .pricing-section {
