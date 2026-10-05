@@ -726,90 +726,68 @@
         </div>
       </div>
 
-      <!-- TAB 2: LANDING PAGES -->
-      <div id="tab-landings" class="pricing-grid">
-        <!-- Card Landing 1 -->
-        <div class="pricing-card">
-          <div class="card-tag">Esencial</div>
-          <h3 class="card-title">Informativa - Entrega Única</h3>
-          <p class="card-desc">Presencia web lista para vender. Sin mensualidades de hosting ni mantenimiento.</p>
-          <div class="price-box">
-            <span class="currency">$</span>
-            <span class="amount">2,400</span>
-            <span class="period">MXN único</span>
-          </div>
-          <div class="wholesale-box">
-            <span>Sucursales adicionales: <strong>$1,950 MXN c/u</strong></span>
-            <span>Cambios futuros: <strong>Cotizados por evento</strong></span>
-          </div>
-          <ul class="features-list">
-            <li><span class="check-icon">✓</span> One-Page responsiva (celular y PC)</li>
-            <li><span class="check-icon">✓</span> Cero costo de hosting y servidor</li>
-            <li><span class="check-icon">✓</span> Botón flotante a WhatsApp y Redes</li>
-            <li><span class="check-icon">✓</span> Integración con Google Maps</li>
-            <li class="disabled">✕ Póliza de cambios incluida</li>
-          </ul>
-          <a href="https://wa.me/521XXXXXXXXXX?text=Hola,%20me%20interesa%20la%20Landing%20Informativa%20Entrega%20Única" target="_blank" class="pricing-btn">Cotizar Web</a>
-        </div>
-
-        <!-- Card Landing 2 -->
-        <div class="pricing-card">
-          <div class="card-tag">Tranquilidad Total</div>
-          <h3 class="card-title">Informativa + Póliza Anual</h3>
-          <p class="card-desc">Tu web siempre actualizada con soporte técnico y respaldos durante todo el año.</p>
-          <div class="price-box">
-            <span class="currency">$</span>
-            <span class="amount">3,600</span>
-            <span class="period">MXN Setup</span>
-          </div>
-          <div class="wholesale-box">
-            <span>Póliza anual: <strong>+$1,200 MXN / año</strong></span>
-            <span>Setup x sucursal: <strong>$2,900 MXN</strong></span>
-          </div>
-          <ul class="features-list">
-            <li><span class="check-icon">✓</span> Diseño profesional personalizado</li>
-            <li><span class="check-icon">✓</span> Conexión de datos vía Google Sheets</li>
-            <li><span class="check-icon">✓</span> Mantenimiento preventivo anual incluido</li>
-            <li><span class="check-icon">✓</span> Cambios menores de texto y fotos</li>
-            <li><span class="check-icon">✓</span> Soporte prioritario vía WhatsApp</li>
-          </ul>
-          <a href="https://wa.me/521XXXXXXXXXX?text=Hola,%20me%20interesa%20la%20Landing%20Informativa%20con%20Póliza" target="_blank" class="pricing-btn">Contratar con Póliza</a>
-        </div>
-
-        <!-- Card Landing 3 (Destacada) -->
-        <div class="pricing-card featured">
-          <div class="card-tag highlight">Más Vendida Restaurantes</div>
-          <h3 class="card-title">Dinámica con Menú / Catálogo</h3>
-          <p class="card-desc">Actualiza platillos, stock o precios en segundos directamente desde tu Google Sheets.</p>
-          <div class="price-box">
-            <span class="currency">$</span>
-            <span class="amount">3,800</span>
-            <span class="period">MXN único</span>
-          </div>
-          <div class="wholesale-box">
-            <span>Opción con Póliza Anual: <strong>$4,500 + $1,800/año</strong></span>
-            <span>Setup x sucursal: <strong>$3,100 MXN</strong></span>
-          </div>
-          <ul class="features-list">
-            <li><span class="check-icon">✓</span> <strong>Menú/Catálogo dinámico desde Google Sheets</strong></li>
-            <li><span class="check-icon">✓</span> Botón de pedido directo a WhatsApp</li>
-            <li><span class="check-icon">✓</span> Capacitación en vivo (30-45 min)</li>
-            <li><span class="check-icon">✓</span> Manual paso a paso para tu personal</li>
-            <li><span class="check-icon">✓</span> Cero costos obligatorios de hosting</li>
-          </ul>
-          <a href="https://wa.me/521XXXXXXXXXX?text=Hola,%20me%20interesa%20la%20Landing%20Dinámica%20con%20Menú%20Google%20Sheets" target="_blank" class="pricing-btn primary-btn">Solicitar con Menú</a>
-        </div>
-      </div>
-
-      <!-- Nota inferior -->
-      <div class="pricing-footer-note">
-        <p>💡 <em>¿Requieres dominio propio (.com / .mx)? Se cotiza por separado sin sobrecostos ocultos. Pregunta por nuestro paquete de <strong>Placa Inteligente + Menú Digital</strong> con precio especial.</em></p>
-      </div>
-
+      <!-- TAB 2: LANDING PAGES A MEDIDA (FORMULARIO Y WHATSAPP) -->
+<div id="tab-landings" class="pricing-grid">
+  <div class="custom-solution-card">
+    
+    <div class="custom-solution-header">
+      <span class="custom-badge">Soluciones 100% Personalizadas</span>
+      <h3>Desarrollo Web & Menús Digitales a tu Medida</h3>
+      <p class="custom-lead">
+        Sabemos que <strong>cada negocio es diferente</strong>. No creemos en paquetes rígidos ni en costos mensuales forzosos que no necesitas. Analizamos el giro de tu empresa, tu presupuesto y tus objetivos para diseñar una solución digital funcional, a tu alcance y que resuelva tus necesidades reales de venta y presencia en línea.
+      </p>
     </div>
-  </div>
-</section>
 
+    <div class="custom-solution-body">
+      <!-- FORMULARIO DE CONTACTO -->
+      <form class="custom-contact-form" onsubmit="enviarContacto(event)">
+        <div class="form-group">
+          <label for="landing-nombre">Nombre completo o de tu negocio</label>
+          <input type="text" id="landing-nombre" placeholder="Ej. Roberto Sánchez / Taquería El Sol" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="landing-email">Correo Electrónico</label>
+            <input type="email" id="landing-email" placeholder="ejemplo@correo.com" required>
+          </div>
+          <div class="form-group">
+            <label for="landing-tel">Teléfono / WhatsApp</label>
+            <input type="tel" id="landing-tel" placeholder="33 1234 5678" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="landing-mensaje">Cuéntanos sobre tu negocio y qué te gustaría lograr</label>
+          <textarea id="landing-mensaje" rows="4" placeholder="Ej. Tengo una cafetería y quiero mostrar mi menú por QR actualizado desde Sheets, o necesito una página para que me contacten..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit-form">
+          <span>Enviar Información para Propuesta</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+
+      <!-- SEPARADOR / VÍA RÁPIDA -->
+      <div class="quick-contact-box">
+        <div class="quick-divider">
+          <span>O si prefieres atención inmediata</span>
+        </div>
+        
+        <p class="whatsapp-prompt">
+          Platícanos directamente qué tienes en mente y armamos tu propuesta personalizada hoy mismo:
+        </p>
+
+        <a href="https://wa.me/521XXXXXXXXXX?text=Hola,%20quisiera%20cotizar%20una%20landing%20page%20o%20men%C3%BA%20digital%20a%20la%20medida%20de%20mi%20negocio." target="_blank" class="btn-whatsapp-quote">
+          <span class="wa-icon">💬</span>
+          <span>Cotizar por WhatsApp a tu Medida</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+      
 <!-- ================= ESTILOS CSS ================= -->
 <style>
   .pricing-section {
