@@ -448,6 +448,15 @@
       </button>
     </nav>
 
+    <!-- BOTÓN CONÓCENOS / SOBRE NOSOTROS -->
+<div class="about-us-cta-container">
+  <a href="nosotros.html" class="btn-about-us">
+    <span class="icon">💼</span>
+    <span class="text">Conócenos · Nuestra Historia</span>
+    <span class="arrow">→</span>
+  </a>
+</div>
+
     <!-- CONTENIDO DINÁMICO DE CADA LÍNEA DE NEGOCIO -->
     <main class="content-area">
       
@@ -1313,6 +1322,44 @@
     font-size: 0.95rem;
   }
 
+  /* Contenedor y Botón Conócenos */
+.about-us-cta-container {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.btn-about-us {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(30, 41, 59, 0.7);
+  color: #38bdf8;
+  border: 1px solid #38bdf8;
+  padding: 12px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.15);
+}
+
+.btn-about-us:hover {
+  background: #38bdf8;
+  color: #0b1120;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
+}
+
+.btn-about-us .arrow {
+  transition: transform 0.3s ease;
+}
+
+.btn-about-us:hover .arrow {
+  transform: translateX(4px);
+}
   @media (max-width: 768px) {
     .pricing-header h2 { font-size: 1.8rem; }
     .pricing-tabs { width: 100%; flex-direction: column; border-radius: 12px; }
