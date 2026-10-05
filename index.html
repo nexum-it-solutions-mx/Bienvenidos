@@ -790,6 +790,198 @@
       
 <!-- ================= ESTILOS CSS ================= -->
 <style>
+  /* Tarjeta contenedora de la propuesta a medida */
+.custom-solution-card {
+  grid-column: 1 / -1; /* Ocupa todo el ancho disponible */
+  background: #131d31;
+  border: 1px solid #1e293b;
+  border-radius: 18px;
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.custom-solution-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 35px auto;
+}
+
+.custom-badge {
+  background: rgba(14, 165, 233, 0.15);
+  color: #38bdf8;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.custom-solution-header h3 {
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.custom-lead {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.custom-lead strong {
+  color: #e2e8f0;
+}
+
+/* Formulario */
+.custom-solution-body {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.custom-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.form-group input,
+.form-group textarea {
+  background: #0b1120;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.btn-submit-form {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 5px;
+}
+
+.btn-submit-form:hover {
+  background: linear-gradient(135deg, #0369a1, #0284c7);
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Vía directa por WhatsApp */
+.quick-contact-box {
+  margin-top: 35px;
+  text-align: center;
+}
+
+.quick-divider {
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.quick-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #1e293b;
+  z-index: 1;
+}
+
+.quick-divider span {
+  position: relative;
+  z-index: 2;
+  background: #131d31;
+  padding: 0 15px;
+  color: #64748b;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.whatsapp-prompt {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+}
+
+.btn-whatsapp-quote {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #25d366;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 13px 28px;
+  border-radius: 50px;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-whatsapp-quote:hover {
+  background: #20ba5a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .custom-solution-card {
+    padding: 25px 18px;
+  }
+}
   .pricing-section {
     padding: 50px 20px;
     background: #0b1120;
