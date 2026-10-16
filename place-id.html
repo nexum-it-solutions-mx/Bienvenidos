@@ -12,12 +12,22 @@
         .btn-back:hover { background: #0066cc; }
         .container { display: flex; flex: 1; position: relative; height: calc(100vh - 60px); }
         #map { flex: 1; height: 100%; }
-        .sidebar { width: 360px; background: #fff; padding: 24px; box-shadow: -2px 0 10px rgba(0,0,0,0.1); z-index: 5; display: flex; flex-direction: column; gap: 16px; }
+        .sidebar { width: 380px; background: #fff; padding: 24px; box-shadow: -2px 0 10px rgba(0,0,0,0.1); z-index: 5; display: flex; flex-direction: column; gap: 16px; }
         .search-container { position: absolute; top: 15px; left: 15px; z-index: 10; background: #fff; padding: 6px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
         #pac-input { width: 320px; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
-        .info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
-        .place-id-box { background: #e0f2fe; border: 1px dashed #0284c7; padding: 10px; border-radius: 6px; font-family: monospace; color: #0369a1; word-break: break-all; margin-top: 6px; user-select: all; font-size: 0.95rem; }
-        .review-link { display: inline-block; margin-top: 12px; color: #0284c7; font-weight: bold; text-decoration: none; font-size: 0.9rem; }
+        .info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        
+        .field-group { display: flex; flex-direction: column; gap: 4px; }
+        .field-group label { font-size: 0.85rem; font-weight: 600; color: #334155; }
+        
+        .place-id-box { background: #e0f2fe; border: 1px dashed #0284c7; padding: 8px 10px; border-radius: 6px; font-family: monospace; color: #0369a1; word-break: break-all; user-select: all; font-size: 0.9rem; }
+        
+        .url-box-container { display: flex; gap: 6px; align-items: center; }
+        .url-input { flex: 1; padding: 8px; font-size: 0.85rem; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #1e293b; outline: none; }
+        .btn-copy { background: #10b981; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: background 0.2s; }
+        .btn-copy:hover { background: #059669; }
+        
+        .review-link { display: inline-block; color: #0284c7; font-weight: bold; text-decoration: none; font-size: 0.9rem; }
         .review-link:hover { text-decoration: underline; }
     </style>
 </head>
@@ -29,7 +39,7 @@
     </div>
 
     <div class="container">
-        <!-- Input estándar de búsqueda -->
+        <!-- Campo de búsqueda -->
         <div class="search-container">
             <input id="pac-input" type="text" placeholder="Escribe el nombre del negocio...">
         </div>
@@ -40,11 +50,25 @@
         <!-- Panel lateral -->
         <div class="sidebar">
             <div class="info-card">
-                <h3 id="place-name">Busca un negocio...</h3>
-                <p id="place-address" style="color: #64748b; font-size: 0.85rem; margin-top: 6px; margin-bottom: 12px;"></p>
-                <label style="font-size: 0.85rem; font-weight: 600; color: #334155;">Place ID del negocio:</label>
-                <div class="place-id-box" id="place-id">Aún no seleccionado</div>
-                <a id="review-url" href="#" target="_blank" class="review-link" style="display: none;">🔗 Probar enlace de reseña</a>
+                <div>
+                    <h3 id="place-name">Busca un negocio...</h3>
+                    <p id="place-address" style="color: #64748b; font-size: 0.85rem; margin-top: 4px;"></p>
+                </div>
+
+                <div class="field-group">
+                    <label>Place ID:</label>
+                    <div class="place-id-box" id="place-id">Aún no seleccionado</div>
+                </div>
+
+                <div class="field-group" id="url-group" style="display: none;">
+                    <label>URL Directa de Reseña (NFC / QR):</label>
+                    <div class="url-box-container">
+                        <input type="text" id="review-url-input" class="url-input" readonly>
+                        <button class="btn-copy" onclick="copyUrl()">Copiar</button>
+                    </div>
+                </div>
+
+                <a id="review-url" href="#" target="_blank" class="review-link" style="display: none;">🔗 Abrir enlace de prueba</a>
             </div>
         </div>
     </div>
@@ -69,7 +93,34 @@
                 anchorPoint: new google.maps.Point(0, -29)
             });
 
-            // Escuchar cuando el usuario selecciona una opción de la lista
+            function updateUI(name, address, placeId, location) {
+                if (location) {
+                    map.setCenter(location);
+                    map.setZoom(17);
+                    marker.setPosition(location);
+                    marker.setVisible(true);
+                }
+
+                document.getElementById("place-name").textContent = name || "Sin nombre";
+                document.getElementById("place-address").textContent = address || "";
+                document.getElementById("place-id").textContent = placeId || "No disponible";
+
+                if (placeId) {
+                    // URL directa de reseñas
+                    const fullReviewUrl = `https://search.google.com/local/writereview?placeid=${placeId}`;
+                    
+                    // Actualizar campo de texto y botón
+                    document.getElementById("review-url-input").value = fullReviewUrl;
+                    document.getElementById("url-group").style.display = "flex";
+
+                    // Enlace de prueba
+                    const reviewLink = document.getElementById("review-url");
+                    reviewLink.href = fullReviewUrl;
+                    reviewLink.style.display = "inline-block";
+                }
+            }
+
+            // Al seleccionar en el buscador
             autocomplete.addListener("place_changed", () => {
                 marker.setVisible(false);
                 const place = autocomplete.getPlace();
@@ -79,58 +130,43 @@
                     return;
                 }
 
-                // Centrar el mapa en la ubicación elegida
-                if (place.geometry.viewport) {
-                    map.fitBounds(place.geometry.viewport);
-                } else {
-                    map.setCenter(place.geometry.location);
-                    map.setZoom(17);
-                }
-
-                marker.setPosition(place.geometry.location);
-                marker.setVisible(true);
-
-                // Llenar datos en el panel lateral
-                document.getElementById("place-name").textContent = place.name || "Sin nombre";
-                document.getElementById("place-address").textContent = place.formatted_address || "";
-                document.getElementById("place-id").textContent = place.place_id || "No disponible";
-
-                if (place.place_id) {
-                    const reviewUrl = `https://search.google.com/local/writereview?placeid=${place.place_id}`;
-                    const reviewLink = document.getElementById("review-url");
-                    reviewLink.href = reviewUrl;
-                    reviewLink.style.display = "inline-block";
-                }
+                updateUI(place.name, place.formatted_address, place.place_id, place.geometry.location);
             });
 
-            // Permitir hacer clic directamente en cualquier ícono/negocio del mapa
+            // Al hacer clic sobre un punto en el mapa
             map.addListener("click", (event) => {
                 if (event.placeId) {
                     event.stop();
                     const service = new google.maps.places.PlacesService(map);
                     service.getDetails({ placeId: event.placeId }, (result, status) => {
                         if (status === google.maps.places.PlacesServiceStatus.OK && result) {
-                            map.setCenter(result.geometry.location);
-                            map.setZoom(17);
-                            marker.setPosition(result.geometry.location);
-                            marker.setVisible(true);
-
-                            document.getElementById("place-name").textContent = result.name || "Sin nombre";
-                            document.getElementById("place-address").textContent = result.formatted_address || "";
-                            document.getElementById("place-id").textContent = result.place_id || "No disponible";
-
-                            const reviewUrl = `https://search.google.com/local/writereview?placeid=${result.place_id}`;
-                            const reviewLink = document.getElementById("review-url");
-                            reviewLink.href = reviewUrl;
-                            reviewLink.style.display = "inline-block";
+                            updateUI(result.name, result.formatted_address, result.place_id, result.geometry.location);
                         }
                     });
                 }
             });
         }
+
+        // Función para copiar la URL al portapapeles
+        function copyUrl() {
+            const input = document.getElementById("review-url-input");
+            input.select();
+            input.setSelectionRange(0, 99999); // Para dispositivos móviles
+            navigator.clipboard.writeText(input.value);
+
+            const btn = document.querySelector(".btn-copy");
+            const originalText = btn.textContent;
+            btn.textContent = "¡Copiado!";
+            btn.style.background = "#059669";
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = "#10b981";
+            }, 2000);
+        }
     </script>
 
-    <!-- Carga sincrónica y limpia de Google Maps JS API -->
+    <!-- Carga de la API de Google Maps -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4wKfBlYgwZql-jY6UBvRihfy4bEXYtus&libraries=places&callback=initMap" async defer></script>
 </body>
 </html>
