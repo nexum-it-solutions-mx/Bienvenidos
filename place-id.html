@@ -155,12 +155,18 @@
 
     <!-- Lógica JS para capturar la selección del negocio -->
     <script type="module">
+    async function initMap() {
+        // Carga las librerías necesarias de Google Maps
+        await google.maps.importLibrary("maps");
+        await google.maps.importLibrary("places");
+
         const autocomplete = document.getElementById('autocomplete');
         const placeName = document.getElementById('place-name');
         const placeAddress = document.getElementById('place-address');
         const placeIdElem = document.getElementById('place-id');
         const reviewUrlElem = document.getElementById('review-url');
 
+        // Escucha la selección del negocio
         autocomplete.addEventListener('gmp-placeselect', async (event) => {
             const place = event.place;
             await place.fetchFields({ fields: ['id', 'displayName', 'formattedAddress'] });
@@ -170,12 +176,16 @@
                 placeAddress.textContent = place.formattedAddress;
                 placeIdElem.textContent = place.id;
 
-                // Generar URL directa de reseñas
+                // Genera la URL directa a la ventana de reseña
                 const reviewUrl = `https://search.google.com/local/writereview?placeid=${place.id}`;
                 reviewUrlElem.href = reviewUrl;
                 reviewUrlElem.style.display = 'inline-block';
             }
         });
-    </script>
+    }
+
+    initMap();
+</script>
+
 </body>
 </html>
