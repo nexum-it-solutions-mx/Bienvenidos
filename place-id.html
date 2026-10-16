@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Place ID - Nexum</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f4f6f8;
+        }
+
+        /* Barra superior de navegación */
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1a2332;
+            color: #ffffff;
+            padding: 12px 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #0088ff;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #0066cc;
+        }
+
+        /* Contenedor principal */
+        .container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 60px);
+        }
+
+        #map {
+            flex: 1;
+            height: 100%;
+        }
+
+        /* Panel lateral de resultados */
+        .sidebar {
+            width: 360px;
+            background: #ffffff;
+            padding: 24px;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .info-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .place-id-box {
+            background: #e0f2fe;
+            border: 1px dashed #0284c7;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: #0369a1;
+            word-break: break-all;
+            margin-top: 6px;
+        }
+
+        .review-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #0284c7;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .review-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <!-- Google Maps API JS con Autocomplete -->
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+            key: "TU_GOOGLE_MAPS_API_KEY", //  Reemplaza con tu API Key de Google Maps
+            v: "places"
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Header con botón para regresar -->
+    <div class="header-bar">
+        <h2>Obtener Place ID</h2>
+        <!-- Cambia 'index.html' por la URL de tu página principal si es diferente -->
+        <a href="index.html" class="btn-back">
+            &larr; Volver al Inicio
+        </a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="container">
+        <!-- Mapa y buscador integrado -->
+        <gmp-map id="map" center="20.6597,-103.3496" zoom="13" map-id="DEMO_MAP_ID">
+            <gmp-place-autocomplete slot="control-inline-start-block-start" id="autocomplete"></gmp-place-autocomplete>
+        </gmp-map>
+
+        <!-- Sidebar con los resultados del Place ID -->
+        <div class="sidebar">
+            <div class="info-card">
+                <h3 id="place-name">Busca un negocio...</h3>
+                <p id="place-address" style="color: #64748b; font-size: 0.85rem; margin-bottom: 12px;"></p>
+                
+                <label style="font-size: 0.85rem; font-weight: 600; color: #475569;">Place ID del negocio:</label>
+                <div class="place-id-box" id="place-id">Aún no seleccionado</div>
+
+                <a id="review-url" href="#" target="_blank" class="review-link" style="display: none;">
+                     Probar enlace de reseña
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lógica JS para capturar la selección del negocio -->
+    <script type="module">
+        const autocomplete = document.getElementById('autocomplete');
+        const placeName = document.getElementById('place-name');
+        const placeAddress = document.getElementById('place-address');
+        const placeIdElem = document.getElementById('place-id');
+        const reviewUrlElem = document.getElementById('review-url');
+
+        autocomplete.addEventListener('gmp-placeselect', async (event) => {
+            const place = event.place;
+            await place.fetchFields({ fields: ['id', 'displayName', 'formattedAddress'] });
+
+            if (place.id) {
+                placeName.textContent = place.displayName;
+                placeAddress.textContent = place.formattedAddress;
+                placeIdElem.textContent = place.id;
+
+                // Generar URL directa de reseñas
+                const reviewUrl = `https://search.google.com/local/writereview?placeid=${place.id}`;
+                reviewUrlElem.href = reviewUrl;
+                reviewUrlElem.style.display = 'inline-block';
+            }
+        });
+    </script>
+</body>
+</html>
