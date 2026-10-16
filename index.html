@@ -6,7 +6,7 @@
   <title>Infraestructura, Conectividad Inteligente y Transformación Digital</title>
   <meta name="description" content="Infraestructura, soporte técnico y soluciones inteligentes de conectividad Nexum.">
 
-  <!-- Fuentes tipográficas e Iconografía -->
+  <!-- Fuentes e Iconos -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -54,9 +54,6 @@
       align-items: center;
     }
 
-    /* ========================================================
-       TOP / HEADER CON LOGOTIPO EMBEBIDO VECTORIAL
-       ======================================================== */
     header {
       width: 100%;
       display: flex;
@@ -73,7 +70,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
     }
 
     .brand-svg-logo {
@@ -93,9 +89,6 @@
       text-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
     }
 
-    /* ========================================================
-       LÍNEAS Y MENÚ DE PESTAÑAS
-       ======================================================== */
     .circuit-separator {
       width: 80%;
       height: 2px;
@@ -104,6 +97,7 @@
       margin: 18px 0 28px;
     }
 
+    /* Pestañas Principales */
     .nav-tabs {
       display: flex;
       flex-wrap: wrap;
@@ -125,14 +119,8 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       backdrop-filter: blur(10px);
-    }
-
-    .nav-tabs .tab-btn i {
-      font-size: 1.15rem;
-      color: var(--silver-muted);
-      transition: color 0.3s;
     }
 
     .nav-tabs .tab-btn:hover {
@@ -142,10 +130,6 @@
       transform: translateY(-2px);
     }
 
-    .nav-tabs .tab-btn:hover i {
-      color: var(--cyan-neon);
-    }
-
     .nav-tabs .tab-btn.active {
       background: linear-gradient(135deg, rgba(30, 107, 245, 0.4), rgba(0, 210, 255, 0.22));
       border-color: var(--cyan-neon);
@@ -153,14 +137,814 @@
       box-shadow: 0 0 20px rgba(0, 210, 255, 0.45);
     }
 
-    .nav-tabs .tab-btn.active i {
-      color: var(--cyan-neon);
-      text-shadow: 0 0 8px var(--cyan-neon);
-    }
-
-    /* ========================================================
-       BOTÓN CONÓCENOS
-       ======================================================== */
+    /* Botón Nosotros */
     .about-us-cta-container {
       text-align: center;
-      margin
+      margin-bottom: 25px;
+    }
+
+    .btn-about-us {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: rgba(30, 41, 59, 0.7);
+      color: #38bdf8;
+      border: 1px solid #38bdf8;
+      padding: 12px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-about-us:hover {
+      background: #38bdf8;
+      color: #0b1120;
+      transform: translateY(-2px);
+    }
+
+    /* Paneles Principales */
+    .content-area {
+      width: 100%;
+      min-height: 350px;
+    }
+
+    .service-panel {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 34px 30px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .service-panel.active {
+      display: block;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 18px;
+    }
+
+    .panel-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 14px;
+      background: rgba(0, 210, 255, 0.1);
+      border: 1.5px solid var(--cyan-neon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan-neon);
+      font-size: 1.6rem;
+    }
+
+    .panel-header h2 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .panel-header p {
+      color: var(--cyan-neon);
+      font-size: 0.96rem;
+      font-weight: 600;
+    }
+
+    .market-badge {
+      background: rgba(0, 0, 0, 0.25);
+      border-left: 3px solid var(--cyan-neon);
+      padding: 13px 18px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 24px;
+      font-size: 0.96rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 13px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.025);
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .feature-item i {
+      color: var(--cyan-neon);
+      margin-top: 4px;
+    }
+
+    .empower-banner {
+      width: 100%;
+      margin-top: 36px;
+      background: linear-gradient(135deg, rgba(30, 107, 245, 0.22), rgba(0, 210, 255, 0.16));
+      border: 1.5px solid rgba(0, 210, 255, 0.4);
+      border-radius: 18px;
+      padding: 24px 28px;
+      text-align: center;
+    }
+
+    .empower-banner p {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .empower-banner span {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: var(--silver-muted);
+    }
+
+    /* Módulo Desplegable de Precios */
+    .pricing-section {
+      width: 100%;
+      padding: 40px 0 20px;
+    }
+
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .pricing-badge {
+      background: rgba(14, 165, 233, 0.15);
+      color: #38bdf8;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    .pricing-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #ffffff;
+      border: 1px solid #38bdf8;
+      padding: 16px 36px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      font-weight: 700;
+      box-shadow: 0 4px 20px rgba(2, 132, 199, 0.35);
+    }
+
+    .toggle-icon.rotate {
+      transform: rotate(180deg);
+    }
+
+    .pricing-subtitle {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-top: 15px;
+    }
+
+    .pricing-collapsible {
+      display: none;
+      margin-top: 35px;
+    }
+
+    .pricing-collapsible.open {
+      display: block;
+    }
+
+    .pricing-tabs-wrapper {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .pricing-tabs {
+      display: inline-flex;
+      background: #1e293b;
+      padding: 5px;
+      border-radius: 30px;
+      border: 1px solid #334155;
+    }
+
+    .pricing-tabs .sub-tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 10px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-tabs .sub-tab-btn.active {
+      background: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.4);
+    }
+
+    .pricing-grid {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .pricing-grid.active {
+      display: grid !important;
+    }
+
+    .pricing-card {
+      background: #131d31;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 30px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pricing-card.featured {
+      background: #172540;
+      border: 2px solid #0284c7;
+    }
+
+    .card-tag {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .card-desc {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 15px;
+    }
+
+    .price-box .amount {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .wholesale-box {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 24px;
+      font-size: 0.82rem;
+      border-left: 3px solid #0284c7;
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 25px;
+      flex-grow: 1;
+    }
+
+    .features-list li {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .check-icon {
+      color: #10b981;
+    }
+
+    .pricing-btn {
+      text-align: center;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      background: #1e293b;
+      color: #ffffff;
+      border: 1px solid #334155;
+    }
+
+    .pricing-btn.primary-btn {
+      background: #0284c7;
+      border-color: #0284c7;
+    }
+
+    .custom-solution-card {
+      grid-column: 1 / -1;
+      background: #131d31;
+      border: 1px solid #1e293b;
+      border-radius: 18px;
+      padding: 35px 25px;
+    }
+
+    .custom-solution-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .custom-solution-header h3 {
+      font-size: 1.7rem;
+      color: #ffffff;
+      margin: 10px 0;
+    }
+
+    .custom-lead {
+      color: #94a3b8;
+      font-size: 1rem;
+    }
+
+    .custom-solution-body {
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .custom-contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: #0b1120;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      color: #ffffff;
+      outline: none;
+    }
+
+    .btn-submit-form {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #ffffff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .quick-contact-box {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .quick-divider {
+      border-top: 1px solid #1e293b;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .quick-divider span {
+      background: #131d31;
+      padding: 0 10px;
+      position: relative;
+      top: -10px;
+      color: #64748b;
+      font-size: 0.8rem;
+    }
+
+    .btn-whatsapp-quote {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25d366;
+      color: #ffffff;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #64748b;
+      font-size: 0.82rem;
+      text-align: center;
+    }
+
+    @media (max-width: 650px) {
+      .form-row { grid-template-columns: 1fr; }
+      .pricing-toggle-btn { font-size: 1.2rem; padding: 12px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- HEADER -->
+    <header>
+      <div class="logo-hero-wrapper">
+        <svg class="brand-svg-logo" viewBox="0 0 850 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="chromeGrad" x1="0" y1="0" x2="0" y2="100%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="35%" stop-color="#d1d9e6"/>
+              <stop offset="65%" stop-color="#8a99ad"/>
+              <stop offset="100%" stop-color="#ced8e4"/>
+            </linearGradient>
+
+            <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3.5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <g stroke="#00d2ff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" filter="url(#neonGlow)">
+            <path d="M 40,85 L 110,85" />
+            <path d="M 50,55 L 75,55 L 95,70 L 115,70" />
+            <path d="M 60,115 L 85,115 L 105,100 L 115,100" />
+            <circle cx="38" cy="85" r="3.5" fill="#00d2ff" />
+            <circle cx="48" cy="55" r="3.5" fill="#00d2ff" />
+            <circle cx="58" cy="115" r="3.5" fill="#00d2ff" />
+
+            <path d="M 125,85 L 340,85" />
+            <path d="M 125,60 L 250,60 L 275,45 L 430,45" />
+            <path d="M 125,110 L 250,110 L 275,125 L 470,125" />
+            <path d="M 330,85 L 345,72 L 530,72" />
+            <path d="M 360,85 L 375,98 L 520,98" />
+            <circle cx="432" cy="45" r="3.5" fill="#00d2ff" />
+            <circle cx="532" cy="72" r="3.5" fill="#00d2ff" />
+            <circle cx="522" cy="98" r="3.5" fill="#00d2ff" />
+            <circle cx="472" cy="125" r="3.5" fill="#00d2ff" />
+          </g>
+
+          <g transform="translate(120, 85)">
+            <rect x="-4" y="-55" width="8" height="110" fill="url(#chromeGrad)" rx="2"/>
+            <rect x="-55" y="-4" width="110" height="8" fill="url(#chromeGrad)" rx="2"/>
+            <circle cx="0" cy="-55" r="6" fill="#8a99ad" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="0" cy="55" r="6" fill="#8a99ad" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="-55" cy="0" r="6" fill="#8a99ad" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="55" cy="0" r="6" fill="#8a99ad" stroke="#fff" stroke-width="1.5"/>
+
+            <rect x="-35" y="-35" width="70" height="70" fill="none" stroke="url(#chromeGrad)" stroke-width="9" rx="7" transform="rotate(45)"/>
+            <rect x="-28" y="-28" width="56" height="56" fill="none" stroke="#253549" stroke-width="4" transform="rotate(45)"/>
+
+            <circle cx="0" cy="0" r="16" fill="url(#chromeGrad)"/>
+            <circle cx="0" cy="0" r="12" fill="#0b2b4e"/>
+            <circle cx="0" cy="0" r="10" fill="#00d2ff" opacity="0.85" filter="url(#neonGlow)"/>
+            <circle cx="-3" cy="-3" r="3.5" fill="#ffffff" opacity="0.9"/>
+          </g>
+
+          <text x="245" y="102" fill="url(#chromeGrad)" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="58" letter-spacing="4">NEXUM</text>
+          <text x="495" y="98" fill="#dce6f2" font-family="'Space Grotesk', sans-serif" font-weight="500" font-size="28" letter-spacing="5.5" opacity="0.92">IT SOLUTIONS</text>
+        </svg>
+      </div>
+
+      <div class="circuit-separator"></div>
+      <p class="brand-tagline-sub">Soluciones Integrales de Infraestructura, Conectividad y Digitalización</p>
+    </header>
+
+    <!-- MENÚ PRINCIPAL -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab(0)">
+        <i class="fa-solid fa-server"></i>
+        <span>Nexum Tech</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(1)">
+        <i class="fa-solid fa-store"></i>
+        <span>Nexum Business</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(2)">
+        <i class="fa-solid fa-id-card-clip"></i>
+        <span>Nexum Pro</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(3)">
+        <i class="fa-solid fa-paw"></i>
+        <span>Nexum Pets</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(4)">
+        <i class="fa-solid fa-globe"></i>
+        <span>Nexum Web</span>
+      </button>
+    </nav>
+
+    <!-- ENLACE A NOSOTROS.HTML -->
+    <div class="about-us-cta-container">
+      <a href="nosotros.html" class="btn-about-us">
+        <span>💼</span>
+        <span>Conócenos · Nuestra Historia</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- PANELES DE CONTENIDO -->
+    <main class="content-area">
+      
+      <section class="service-panel active">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-network-wired"></i></div>
+          <div>
+            <h2>Nexum Tech</h2>
+            <p>Infraestructura y Soporte de Sistemas</p>
+          </div>
+        </div>
+        <div class="market-badge"><strong>Mercado:</strong> Escuelas, despachos, consultorios y pequeñas oficinas.</div>
+        <ul class="feature-list">
+          <li class="feature-item"><i class="fa-solid fa-microchip"></i> <span>Mantenimiento preventivo y correctivo de equipo de cómputo.</span></li>
+          <li class="feature-item"><i class="fa-solid fa-wifi"></i> <span>Configuración y optimización de redes locales (LAN y Wi-Fi de oficina).</span></li>
+          <li class="feature-item"><i class="fa-solid fa-hard-drive"></i> <span>Administración y respaldo de información y servidores.</span></li>
+          <li class="feature-item"><i class="fa-solid fa-clipboard-check"></i> <span>Pólizas mensuales de soporte técnico.</span></li>
+          <li class="feature-item"><i class="fa-solid fa-wrench"></i> <span>Reparación y venta de equipo de cómputo, accesorios y consumibles.</span></li>
+        </ul>
+      </section>
+
+      <section class="service-panel">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-store"></i></div>
+          <div>
+            <h2>Nexum Business</h2>
+            <p>Comercio y Posicionamiento Local</p>
+          </div>
+        </div>
+        <div class="market-badge"><strong>Mercado:</strong> Restaurantes, cafeterías, estéticas, barberías y comercios minoristas.</div>
+        <ul class="feature-list">
+          <li class="feature-item"><i class="fa-solid fa-nfc-symbol"></i> <span>Placas acrílicas con NFC + QR para captura directa de reseñas en Google Maps.</span></li>
+          <li class="feature-item"><i class="fa-solid fa-table-cells-large"></i> <span>Displays y tótems de mostrador para menús y catálogos digitales.</span></li>
+          <li class="feature-item"><i class="fa-solid fa-bolt"></i> <span>Enlaces directos a redes sociales y WhatsApp.</span></li>
+        </ul>
+      </section>
+
+      <section class="service-panel">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+          <div>
+            <h2>Nexum Pro</h2>
+            <p>Identidad y Networking Profesional</p>
+          </div>
+        </div>
+        <div class="market-badge"><strong>Mercado:</strong> Profesionistas y consultores independientes.</div>
+        <ul class="feature-list">
+          <li class="feature-item"><i class="fa-solid fa-credit-card"></i> <span>Tarjetas de presentación inteligentes (vCards).</span></li>
+          <li class="feature-item"><i class="fa-solid fa-mobile-screen-button"></i> <span>Micrositio de perfil profesional con descarga de contacto (.vcf).</span></li>
+          <li class="feature-item"><i class="fa-solid fa-arrows-rotate"></i> <span>Portafolios digitales de servicios actualizables en tiempo real.</span></li>
+        </ul>
+      </section>
+
+      <section class="service-panel">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-paw"></i></div>
+          <div>
+            <h2>Nexum Pets</h2>
+            <p>Identificación y Rescate de Mascotas</p>
+          </div>
+        </div>
+        <div class="market-badge"><strong>Mercado:</strong> Dueños de mascotas, clínicas veterinarias y estéticas caninas.</div>
+        <ul class="feature-list">
+          <li class="feature-item"><i class="fa-solid fa-shield-halved"></i> <span>Medallas inteligentes ultraligeras y resistentes al agua con NFC.</span></li>
+          <li class="feature-item"><i class="fa-solid fa-notes-medical"></i> <span>Perfil médico en la nube: vacunas, alergias y botón directo de WhatsApp.</span></li>
+        </ul>
+      </section>
+
+      <section class="service-panel">
+        <div class="panel-header">
+          <div class="panel-icon"><i class="fa-solid fa-globe"></i></div>
+          <div>
+            <h2>Nexum Web</h2>
+            <p>Digitalización y Micrositios</p>
+          </div>
+        </div>
+        <div class="market-badge"><strong>Mercado:</strong> Clientes que buscan formalizar su presencia online.</div>
+        <ul class="feature-list">
+          <li class="feature-item"><i class="fa-solid fa-code"></i> <span>Creación y despliegue de landing pages y sitios web informativos.</span></li>
+          <li class="feature-item"><i class="fa-solid fa-table"></i> <span>Catálogos dinámicos conectados a Google Sheets.</span></li>
+          <li class="feature-item"><i class="fa-solid fa-envelope-open-text"></i> <span>Integración de pasarelas y formularios de contacto.</span></li>
+        </ul>
+      </section>
+
+    </main>
+
+    <!-- BANNER MOTIVACIONAL -->
+    <div class="empower-banner">
+      <i class="fa-solid fa-sliders"></i>
+      <p>«Tú tienes el control total: creamos soluciones digitales tan intuitivas que podrás actualizar tus propios precios, menús, productos y datos de contacto en segundos.»</p>
+      <span>Fácil, autónomo y diseñado a la medida de tu negocio.</span>
+    </div>
+
+    <!-- MÓDULO DE PRECIOS -->
+    <section id="precios" class="pricing-section">
+      <div class="pricing-container">
+        
+        <div class="pricing-header">
+          <span class="pricing-badge">Tarifas Transparentes</span>
+          <br>
+          <button class="pricing-toggle-btn" id="btnTogglePrecios" onclick="toggleModuloPrecios()">
+            <span>Soluciones y Precios</span>
+            <span class="toggle-icon" id="toggleIcon">▼</span>
+          </button>
+          <p class="pricing-subtitle">Haz clic arriba para desplegar nuestras soluciones en acrílicos NFC/QR y landing pages.</p>
+        </div>
+
+        <div id="pricingContent" class="pricing-collapsible">
+          
+          <div class="pricing-tabs-wrapper">
+            <div class="pricing-tabs">
+              <button class="sub-tab-btn active" onclick="switchPricingTab('nfc')">Placas Smart NFC & QR</button>
+              <button class="sub-tab-btn" onclick="switchPricingTab('landings')">Landing Pages & Menús</button>
+            </div>
+          </div>
+
+          <!-- PESTAÑA 1: PLACAS NFC -->
+          <div id="tab-nfc" class="pricing-grid active">
+            <div class="pricing-card">
+              <div class="card-tag">Básica</div>
+              <h3 class="card-title">Placa Smart</h3>
+              <p class="card-desc">Ideal para reseñas de Google Maps, Instagram directo o clave WiFi sin contacto.</p>
+              <div class="price-box">
+                <span class="amount">$349 MXN</span>
+              </div>
+              <div class="wholesale-box">
+                <span>Mayoreo (5-10 pzs): <strong>$299 c/u</strong></span>
+              </div>
+              <ul class="features-list">
+                <li><span class="check-icon">✓</span> Acrílico premium de alta resistencia</li>
+                <li><span class="check-icon">✓</span> Impresión UV contra humedad</li>
+                <li><span class="check-icon">✓</span> Chip NFC NTAG configurado</li>
+              </ul>
+              <a href="https://wa.me/525628470586?text=Hola,%20me%20interesa%20la%20Placa%20Smart%20Base" target="_blank" class="pricing-btn">Solicitar Placa</a>
+            </div>
+
+            <div class="pricing-card featured">
+              <div class="card-tag">Más Popular</div>
+              <h3 class="card-title">Placa Smart Premium</h3>
+              <p class="card-desc">Equilibrio perfecto entre estética corporativa y funcionalidad ágil.</p>
+              <div class="price-box">
+                <span class="amount">$459 MXN</span>
+              </div>
+              <div class="wholesale-box">
+                <span>Mayoreo (5-10 pzs): <strong>$399 c/u</strong></span>
+              </div>
+              <ul class="features-list">
+                <li><span class="check-icon">✓</span> Acrílico premium de alta durabilidad</li>
+                <li><span class="check-icon">✓</span> Chip NFC garantizado hasta por 10 años</li>
+                <li><span class="check-icon">✓</span> QR con tu Logotipo</li>
+              </ul>
+              <a href="https://wa.me/525628470586?text=Hola,%20me%20interesa%20la%20Placa%20Smart%20Custom%20QR" target="_blank" class="pricing-btn primary-btn">Ordenar Personalizada</a>
+            </div>
+          </div>
+
+          <!-- PESTAÑA 2: LANDINGS -->
+          <div id="tab-landings" class="pricing-grid">
+            <div class="custom-solution-card">
+              <div class="custom-solution-header">
+                <span class="custom-badge">Soluciones Personalizadas</span>
+                <h3>Desarrollo Web & Menús Digitales a tu Medida</h3>
+                <p class="custom-lead">Analizamos el giro de tu empresa, presupuesto y objetivos para diseñar una solución digital funcional.</p>
+              </div>
+
+              <div class="custom-solution-body">
+                <form class="custom-contact-form" action="https://api.web3forms.com/submit" method="POST">
+                  <input type="hidden" name="access_key" value="00540b1a-8ca5-455c-817f-851c745b6f1d">
+                  <input type="hidden" name="subject" value="Nueva Cotización de Landing Page - Nexum IT">
+
+                  <div class="form-group">
+                    <label for="landing-nombre">Nombre completo / Negocio</label>
+                    <input type="text" name="nombre_cliente" id="landing-nombre" placeholder="Ej. Taquería El Sol" required>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="landing-email">Correo Electrónico</label>
+                      <input type="email" name="email" id="landing-email" placeholder="ejemplo@correo.com" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="landing-tel">Teléfono / WhatsApp</label>
+                      <input type="tel" name="telefono" id="landing-tel" placeholder="33 1234 5678" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="landing-mensaje">Detalles de tu proyecto</label>
+                    <textarea name="mensaje_necesidad" id="landing-mensaje" rows="3" placeholder="Quiero un menú digital..." required></textarea>
+                  </div>
+
+                  <button type="submit" class="btn-submit-form">Enviar Información al Correo ✉️</button>
+                </form>
+
+                <div class="quick-contact-box">
+                  <div class="quick-divider"><span>O ATENCIÓN INMEDIATA</span></div>
+                  <a href="https://wa.me/525628470586?text=Hola,%20quisiera%20cotizar%20una%20landing%20page%20a%20medida." target="_blank" class="btn-whatsapp-quote">
+                    <span>💬 Cotizar por WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Nexum IT Solutions © 2026 · Conectividad y Soluciones Digitales
+    </footer>
+
+  </div>
+
+  <script>
+    // Cambio de pestañas superiores
+    function switchTab(index) {
+      const navButtons = document.querySelectorAll('.nav-tabs .tab-btn');
+      const panels = document.querySelectorAll('.service-panel');
+
+      navButtons.forEach(btn => btn.classList.remove('active'));
+      panels.forEach(panel => panel.classList.remove('active'));
+
+      if (navButtons[index]) navButtons[index].classList.add('active');
+      if (panels[index]) panels[index].classList.add('active');
+    }
+
+    // Despliegue del acordeón
+    function toggleModuloPrecios() {
+      const content = document.getElementById('pricingContent');
+      const icon = document.getElementById('toggleIcon');
+
+      const isOpen = content.classList.contains('open');
+      
+      if (isOpen) {
+        content.classList.remove('open');
+        icon.classList.remove('rotate');
+      } else {
+        content.classList.add('open');
+        icon.classList.add('rotate');
+      }
+    }
+
+    // Cambio de sub-pestañas en precios
+    function switchPricingTab(tabKey) {
+      const subButtons = document.querySelectorAll('.sub-tab-btn');
+      const gridNfc = document.getElementById('tab-nfc');
+      const gridLandings = document.getElementById('tab-landings');
+
+      subButtons.forEach(btn => btn.classList.remove('active'));
+
+      if (tabKey === 'nfc') {
+        subButtons[0].classList.add('active');
+        gridNfc.classList.add('active');
+        gridLandings.classList.remove('active');
+      } else if (tabKey === 'landings') {
+        subButtons[1].classList.add('active');
+        gridLandings.classList.add('active');
+        gridNfc.classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>
