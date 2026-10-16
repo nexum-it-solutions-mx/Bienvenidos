@@ -5,20 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obtener Place ID - Nexum</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { display: flex; flex-direction: column; height: 100vh; background: #f4f6f8; }
         .header-bar { display: flex; align-items: center; justify-content: space-between; background: #1a2332; color: #fff; padding: 12px 24px; z-index: 10; }
-        .btn-back { background: #0088ff; color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; }
+        .btn-back { background: #0088ff; color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; transition: background 0.2s; }
+        .btn-back:hover { background: #0066cc; }
         .container { display: flex; flex: 1; position: relative; height: calc(100vh - 60px); }
         #map { flex: 1; height: 100%; }
-        .sidebar { width: 360px; background: #fff; padding: 24px; box-shadow: -2px 0 10px rgba(0,0,0,0.1); z-index: 5; }
+        .sidebar { width: 360px; background: #fff; padding: 24px; box-shadow: -2px 0 10px rgba(0,0,0,0.1); z-index: 5; display: flex; flex-direction: column; gap: 16px; }
         .search-container { position: absolute; top: 15px; left: 15px; z-index: 10; background: #fff; padding: 8px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
         #pac-input { width: 320px; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
         .info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
-        .place-id-box { background: #e0f2fe; border: 1px dashed #0284c7; padding: 10px; border-radius: 6px; font-family: monospace; color: #0369a1; word-break: break-all; margin-top: 6px; user-select: all; }
-        .review-link { display: inline-block; margin-top: 12px; color: #0284c7; font-weight: bold; text-decoration: none; }
+        .place-id-box { background: #e0f2fe; border: 1px dashed #0284c7; padding: 10px; border-radius: 6px; font-family: monospace; color: #0369a1; word-break: break-all; margin-top: 6px; user-select: all; font-size: 0.95rem; }
+        .review-link { display: inline-block; margin-top: 12px; color: #0284c7; font-weight: bold; text-decoration: none; font-size: 0.9rem; }
         .review-link:hover { text-decoration: underline; }
     </style>
+
+    <!-- Carga dinámica de la API de Google Maps -->
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+            key: "TU_API_KEY_AQUI", // 👈 Reemplaza con tu API Key de Google Cloud
+            v: "weekly"
+        });
+    </script>
 </head>
 <body>
 
@@ -28,15 +37,15 @@
     </div>
 
     <div class="container">
-        <!-- Input buscador dentro del mapa -->
+        <!-- Campo de búsqueda flotante -->
         <div class="search-container">
             <input id="pac-input" type="text" placeholder="Escribe el nombre del negocio...">
         </div>
 
-        <!-- Contenedor del Mapa -->
+        <!-- Mapa -->
         <div id="map"></div>
 
-        <!-- Panel lateral para mostrar los datos -->
+        <!-- Panel de información -->
         <div class="sidebar">
             <div class="info-card">
                 <h3 id="place-name">Busca un negocio...</h3>
@@ -48,20 +57,27 @@
         </div>
     </div>
 
-    <script>
-        function initMap() {
-            // Ubicación inicial por defecto
+    <script type="module">
+        async function init() {
+            // Importar las librerías necesarias
+            const { Map } = await google.maps.importLibrary("maps");
+            const { Autocomplete } = await google.maps.importLibrary("places");
+            const { Marker } = await google.maps.importLibrary("marker");
+
             const defaultLocation = { lat: 20.6597, lng: -103.3496 };
-            const map = new google.maps.Map(document.getElementById("map"), {
+            const map = new Map(document.getElementById("map"), {
                 center: defaultLocation,
                 zoom: 13,
             });
 
             const input = document.getElementById("pac-input");
-            const autocomplete = new google.maps.places.Autocomplete(input);
+            const autocomplete = new Autocomplete(input, {
+                fields: ["place_id", "geometry", "name", "formatted_address"]
+            });
+
             autocomplete.bindTo("bounds", map);
 
-            const marker = new google.maps.Marker({
+            const marker = new Marker({
                 map: map,
                 anchorPoint: new google.maps.Point(0, -29),
             });
@@ -85,7 +101,7 @@
                 marker.setPosition(place.geometry.location);
                 marker.setVisible(true);
 
-                // Asignar los datos recopilados al panel lateral
+                // Mostrar la información obtenida
                 document.getElementById("place-name").textContent = place.name || "";
                 document.getElementById("place-address").textContent = place.formatted_address || "";
                 document.getElementById("place-id").textContent = place.place_id || "";
@@ -98,9 +114,8 @@
                 }
             });
         }
-    </script>
 
-    <!-- Reemplaza TU_API_KEY con tu clave de API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4wKfBlYgwZql-jY6UBvRihfy4bEXYtus&libraries=places&callback=initMap" async defer></script>
+        init();
+    </script>
 </body>
 </html>
