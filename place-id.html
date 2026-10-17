@@ -33,7 +33,7 @@
         
         .review-link { display: inline-block; color: #0284c7; font-weight: bold; text-decoration: none; font-size: 0.85rem; }
 
-        /* Adaptación a Móviles */
+        /* Adaptación para pantallas móviles */
         @media (max-width: 768px) {
             .container { flex-direction: column; }
             #map { flex: 1; height: 50vh; }
@@ -45,7 +45,7 @@
     <!-- Loader Oficial de Google Maps JS API -->
     <script>
         (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-            key: "AIzaSyD4wKfBlYgwZql-jY6UBvRihfy4bEXYtus", // 👈 REEMPLAZA CON TU API KEY
+            key: "AIzaSyD4wKfBlYgwZql-jY6UBvRihfy4bEXYtus", // 👈 REEMPLAZA CON TU CLAVE DE GOOGLE CLOUD
             v: "weekly"
         });
     </script>
@@ -58,13 +58,13 @@
     </div>
 
     <div class="container">
-        <!-- Campo de búsqueda -->
+        <!-- Buscador Web Component -->
         <div class="search-container" id="search-box"></div>
 
-        <!-- Contenedor del Mapa -->
+        <!-- Mapa -->
         <div id="map"></div>
 
-        <!-- Panel de Información (Abajo en Celulares, a la Derecha en Computadoras) -->
+        <!-- Panel lateral / inferior -->
         <div class="sidebar">
             <div class="info-card">
                 <div>
@@ -103,31 +103,36 @@
                 mapId: "DEMO_MAP_ID"
             });
 
-            // Elemento de autocompletado
             const autocomplete = new PlaceAutocompleteElement();
             document.getElementById("search-box").appendChild(autocomplete);
 
             const marker = new AdvancedMarkerElement({ map });
 
-            // Procesar los datos del lugar e integrarlos a la interfaz
-            async function updatePlaceUI(placeInstance) {
+            // Función centralizada para consultar y renderizar detalles
+            async function updatePlaceDetails(placeId) {
+                if (!placeId) return;
+
                 try {
-                    await placeInstance.fetchFields({
+                    // Instanciamos explícitamente el lugar con el Place ID
+                    const place = new Place({ id: placeId });
+
+                    // Solicitamos los campos a Places API (New)
+                    await place.fetchFields({
                         fields: ["id", "displayName", "formattedAddress", "location"]
                     });
 
-                    if (placeInstance.location) {
-                        map.setCenter(placeInstance.location);
+                    if (place.location) {
+                        map.setCenter(place.location);
                         map.setZoom(17);
-                        marker.position = placeInstance.location;
+                        marker.position = place.location;
                     }
 
-                    document.getElementById("place-name").textContent = placeInstance.displayName || "Sin nombre";
-                    document.getElementById("place-address").textContent = placeInstance.formattedAddress || "";
-                    document.getElementById("place-id").textContent = placeInstance.id || "No disponible";
+                    document.getElementById("place-name").textContent = place.displayName || "Sin nombre";
+                    document.getElementById("place-address").textContent = place.formattedAddress || "";
+                    document.getElementById("place-id").textContent = place.id || "No disponible";
 
-                    if (placeInstance.id) {
-                        const fullReviewUrl = `https://search.google.com/local/writereview?placeid=${placeInstance.id}`;
+                    if (place.id) {
+                        const fullReviewUrl = `https://search.google.com/local/writereview?placeid=${place.id}`;
                         document.getElementById("review-url-input").value = fullReviewUrl;
                         document.getElementById("url-group").style.display = "flex";
 
@@ -136,31 +141,42 @@
                         reviewLink.style.display = "inline-block";
                     }
                 } catch (err) {
-                    console.error("Error obteniendo detalles del lugar:", err);
+                    console.error("Error obteniendo detalles del negocio:", err);
                 }
             }
 
-            // Evento al seleccionar en el autocompletado
+            // Manejador del autocompletado
             autocomplete.addEventListener("gmp-placeselect", async (event) => {
-                let place = event.place;
-                if (place) {
-                    if (typeof place.toPlace === "function") {
-                        place = await place.toPlace();
+                let placeId = null;
+
+                // Extraemos de manera segura el ID independientemente de cómo venga envuelto
+                if (event.place) {
+                    if (typeof event.place === "string") {
+                        placeId = event.place;
+                    } else if (event.place.id) {
+                        placeId = event.place.id;
+                    } else if (typeof event.place.toPlace === "function") {
+                        const p = await event.place.toPlace();
+                        placeId = p.id;
                     }
-                    await updatePlaceUI(place);
+                } else if (event.detail && event.detail.place) {
+                    placeId = event.detail.place.id || event.detail.place;
+                }
+
+                if (placeId) {
+                    await updatePlaceDetails(placeId);
                 }
             });
 
-            // Evento al presionar un punto en el mapa
+            // Clic directo sobre negocios / puntos del mapa
             map.addListener("click", async (event) => {
                 if (event.placeId) {
                     event.stop();
-                    const place = new Place({ id: event.placeId });
-                    await updatePlaceUI(place);
+                    await updatePlaceDetails(event.placeId);
                 }
             });
 
-            // Copiar al portapapeles
+            // Botón de Copiar URL al portapapeles
             document.getElementById("btn-copy-action").addEventListener("click", () => {
                 const urlInput = document.getElementById("review-url-input");
                 urlInput.select();
