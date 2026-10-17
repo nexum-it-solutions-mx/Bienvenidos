@@ -6,34 +6,46 @@
     <title>Obtener Place ID - Nexum</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { display: flex; flex-direction: column; height: 100vh; background: #f4f6f8; }
-        .header-bar { display: flex; align-items: center; justify-content: space-between; background: #1a2332; color: #fff; padding: 12px 24px; z-index: 10; }
-        .btn-back { background: #0088ff; color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; transition: background 0.2s; }
-        .btn-back:hover { background: #0066cc; }
-        .container { display: flex; flex: 1; position: relative; height: calc(100vh - 60px); }
-        #map { flex: 1; height: 100%; }
-        .sidebar { width: 380px; background: #fff; padding: 24px; box-shadow: -2px 0 10px rgba(0,0,0,0.1); z-index: 5; display: flex; flex-direction: column; gap: 16px; }
-        .search-container { position: absolute; top: 15px; left: 15px; z-index: 10; background: #fff; padding: 6px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
-        .info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        html, body { height: 100%; width: 100%; overflow: hidden; }
+        body { display: flex; flex-direction: column; background: #f4f6f8; }
+        
+        .header-bar { display: flex; align-items: center; justify-content: space-between; background: #1a2332; color: #fff; padding: 12px 16px; z-index: 10; flex-shrink: 0; }
+        .header-bar h2 { font-size: 1.1rem; }
+        .btn-back { background: #0088ff; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
+
+        .container { display: flex; flex: 1; position: relative; overflow: hidden; flex-direction: row; }
+        
+        #map { flex: 1; width: 100%; height: 100%; }
+
+        .search-container { position: absolute; top: 12px; left: 12px; right: 12px; max-width: 360px; z-index: 10; background: #fff; padding: 4px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+
+        .sidebar { width: 360px; background: #fff; padding: 20px; box-shadow: -2px 0 10px rgba(0,0,0,0.1); z-index: 5; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+        .info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
         
         .field-group { display: flex; flex-direction: column; gap: 4px; }
-        .field-group label { font-size: 0.85rem; font-weight: 600; color: #334155; }
+        .field-group label { font-size: 0.8rem; font-weight: 600; color: #334155; }
         
-        .place-id-box { background: #e0f2fe; border: 1px dashed #0284c7; padding: 8px 10px; border-radius: 6px; font-family: monospace; color: #0369a1; word-break: break-all; user-select: all; font-size: 0.9rem; }
+        .place-id-box { background: #e0f2fe; border: 1px dashed #0284c7; padding: 8px; border-radius: 6px; font-family: monospace; color: #0369a1; word-break: break-all; user-select: all; font-size: 0.85rem; }
         
         .url-box-container { display: flex; gap: 6px; align-items: center; }
-        .url-input { flex: 1; padding: 8px; font-size: 0.85rem; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #1e293b; outline: none; }
-        .btn-copy { background: #10b981; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: background 0.2s; }
-        .btn-copy:hover { background: #059669; }
+        .url-input { flex: 1; padding: 8px; font-size: 0.8rem; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #1e293b; outline: none; }
+        .btn-copy { background: #10b981; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.8rem; flex-shrink: 0; }
         
-        .review-link { display: inline-block; color: #0284c7; font-weight: bold; text-decoration: none; font-size: 0.9rem; }
-        .review-link:hover { text-decoration: underline; }
+        .review-link { display: inline-block; color: #0284c7; font-weight: bold; text-decoration: none; font-size: 0.85rem; }
+
+        /* Adaptación a Móviles */
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            #map { flex: 1; height: 50vh; }
+            .sidebar { width: 100%; height: 50vh; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 16px; }
+            .search-container { max-width: calc(100% - 24px); }
+        }
     </style>
 
     <!-- Loader Oficial de Google Maps JS API -->
     <script>
         (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-            key: "AIzaSyD4wKfBlYgwZql-jY6UBvRihfy4bEXYtus", // 👈 REEMPLAZA CON TU CLAVE DE GOOGLE CLOUD
+            key: "AIzaSyD4wKfBlYgwZql-jY6UBvRihfy4bEXYtus", // 👈 REEMPLAZA CON TU API KEY
             v: "weekly"
         });
     </script>
@@ -42,22 +54,22 @@
 
     <div class="header-bar">
         <h2>Obtener Place ID</h2>
-        <a href="index.html" class="btn-back">&larr; Volver al Inicio</a>
+        <a href="index.html" class="btn-back">&larr; Inicio</a>
     </div>
 
     <div class="container">
-        <!-- Buscador Web Component -->
+        <!-- Campo de búsqueda -->
         <div class="search-container" id="search-box"></div>
 
-        <!-- Mapa -->
+        <!-- Contenedor del Mapa -->
         <div id="map"></div>
 
-        <!-- Panel lateral -->
+        <!-- Panel de Información (Abajo en Celulares, a la Derecha en Computadoras) -->
         <div class="sidebar">
             <div class="info-card">
                 <div>
-                    <h3 id="place-name">Busca un negocio...</h3>
-                    <p id="place-address" style="color: #64748b; font-size: 0.85rem; margin-top: 4px;"></p>
+                    <h3 id="place-name" style="font-size: 1rem;">Busca un negocio...</h3>
+                    <p id="place-address" style="color: #64748b; font-size: 0.8rem; margin-top: 2px;"></p>
                 </div>
 
                 <div class="field-group">
@@ -91,45 +103,31 @@
                 mapId: "DEMO_MAP_ID"
             });
 
-            // Crear el elemento de Autocompletado
+            // Elemento de autocompletado
             const autocomplete = new PlaceAutocompleteElement();
             document.getElementById("search-box").appendChild(autocomplete);
 
             const marker = new AdvancedMarkerElement({ map });
 
-            // Función universal para procesar cualquier objeto Place
-            async function processPlace(placeObj) {
-                if (!placeObj) return;
-
+            // Procesar los datos del lugar e integrarlos a la interfaz
+            async function updatePlaceUI(placeInstance) {
                 try {
-                    // Convertir a instancia Place si proviene de una sugerencia o valor raw
-                    let targetPlace = placeObj;
-                    if (typeof placeObj.toPlace === "function") {
-                        targetPlace = await placeObj.toPlace();
-                    } else if (typeof placeObj === "string" || placeObj.id) {
-                        targetPlace = new Place({ id: placeObj.id || placeObj });
-                    }
-
-                    // Solicitar los campos necesarios en la nueva API
-                    await targetPlace.fetchFields({
+                    await placeInstance.fetchFields({
                         fields: ["id", "displayName", "formattedAddress", "location"]
                     });
 
-                    // 1. Mover mapa y colocar marcador
-                    if (targetPlace.location) {
-                        map.setCenter(targetPlace.location);
+                    if (placeInstance.location) {
+                        map.setCenter(placeInstance.location);
                         map.setZoom(17);
-                        marker.position = targetPlace.location;
+                        marker.position = placeInstance.location;
                     }
 
-                    // 2. Actualizar textos en la tarjeta lateral
-                    document.getElementById("place-name").textContent = targetPlace.displayName || "Sin nombre";
-                    document.getElementById("place-address").textContent = targetPlace.formattedAddress || "";
-                    document.getElementById("place-id").textContent = targetPlace.id || "No disponible";
+                    document.getElementById("place-name").textContent = placeInstance.displayName || "Sin nombre";
+                    document.getElementById("place-address").textContent = placeInstance.formattedAddress || "";
+                    document.getElementById("place-id").textContent = placeInstance.id || "No disponible";
 
-                    // 3. Generar enlace directo para reseñas y campo de copia
-                    if (targetPlace.id) {
-                        const fullReviewUrl = `https://search.google.com/local/writereview?placeid=${targetPlace.id}`;
+                    if (placeInstance.id) {
+                        const fullReviewUrl = `https://search.google.com/local/writereview?placeid=${placeInstance.id}`;
                         document.getElementById("review-url-input").value = fullReviewUrl;
                         document.getElementById("url-group").style.display = "flex";
 
@@ -138,27 +136,31 @@
                         reviewLink.style.display = "inline-block";
                     }
                 } catch (err) {
-                    console.error("Error procesando lugar:", err);
+                    console.error("Error obteniendo detalles del lugar:", err);
                 }
             }
 
-            // Escuchar la selección del buscador (gmp-placeselect)
+            // Evento al seleccionar en el autocompletado
             autocomplete.addEventListener("gmp-placeselect", async (event) => {
-                const placeSelection = event.place || (event.detail && event.detail.place);
-                if (placeSelection) {
-                    await processPlace(placeSelection);
+                let place = event.place;
+                if (place) {
+                    if (typeof place.toPlace === "function") {
+                        place = await place.toPlace();
+                    }
+                    await updatePlaceUI(place);
                 }
             });
 
-            // Escuchar clics directos sobre POIs / marcas en el mapa
+            // Evento al presionar un punto en el mapa
             map.addListener("click", async (event) => {
                 if (event.placeId) {
                     event.stop();
-                    await processPlace(event.placeId);
+                    const place = new Place({ id: event.placeId });
+                    await updatePlaceUI(place);
                 }
             });
 
-            // Botón Copiar URL al portapapeles
+            // Copiar al portapapeles
             document.getElementById("btn-copy-action").addEventListener("click", () => {
                 const urlInput = document.getElementById("review-url-input");
                 urlInput.select();
