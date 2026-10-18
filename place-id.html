@@ -185,24 +185,48 @@
                     }
                 });
 
-                // Botón copiar
-                document.getElementById("btn-copy-action").addEventListener("click", async () => {
-                    const urlInput = document.getElementById("review-url-input");
-                    try {
-                        await navigator.clipboard.writeText(urlInput.value);
-                    } catch (e) {
-                        urlInput.select();
-                        document.execCommand("copy");
-                    }
+               // Botón copiar (modificado para copiar únicamente el Place ID)
+document.getElementById("btn-copy-action").addEventListener("click", async () => {
+    // 1. Intentamos leer el Place ID desde el div #place-id o recortarlo del input
+    const placeIdDiv = document.getElementById('place-id');
+    let textoPlaceId = placeIdDiv ? placeIdDiv.innerText.trim() : '';
 
-                    const btn = document.getElementById("btn-copy-action");
-                    btn.textContent = "¡Copiado!";
-                    btn.style.background = "#059669";
-                    setTimeout(() => {
-                        btn.textContent = "Copiar";
-                        btn.style.background = "#10b981";
-                    }, 2000);
-                });
+    if (!textoPlaceId || textoPlaceId === "Aún no seleccionado") {
+        const urlInput = document.getElementById("review-url-input");
+        const valorInput = urlInput ? urlInput.value : '';
+        if (valorInput.includes('placeid=')) {
+            textoPlaceId = valorInput.split('placeid=')[1].split('&')[0];
+        } else {
+            textoPlaceId = valorInput.trim();
+        }
+    }
+
+    // 2. Ejecutamos la copia si tenemos una clave válida
+    if (textoPlaceId && textoPlaceId !== "Aún no seleccionado") {
+        try {
+            await navigator.clipboard.writeText(textoPlaceId);
+        } catch (e) {
+            // Respaldo para navegadores antiguos
+            const tempInput = document.createElement("input");
+            tempInput.value = textoPlaceId;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+
+        // 3. Mantenemos tu animación visual del botón
+        const btn = document.getElementById("btn-copy-action");
+        btn.textContent = "¡Copiado!";
+        btn.style.background = "#059669";
+        setTimeout(() => {
+            btn.textContent = "Copiar";
+            btn.style.background = "#10b981";
+        }, 2000);
+    } else {
+        alert("Por favor, selecciona primero un lugar para obtener su Place ID.");
+    }
+});
 
             } catch (err) {
                 console.error(err);
