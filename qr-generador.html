@@ -58,6 +58,15 @@
         .c-stars { color: #f59e0b; letter-spacing: 2px; }
         #card.s-sticker .c-stars { display: none; }
 
+        .stack { display: flex; flex-direction: column; gap: 12px; }
+        .check { display: flex; gap: 6px; align-items: center; font-size: 0.85rem; padding-bottom: 8px; cursor: pointer; }
+        #card .c-net { color: #111827; font-weight: 600; }
+        #card.s-sticker .c-net { font-size: 7pt; } #card.s-tarjeta .c-net { font-size: 9.5pt; } #card.s-a6 .c-net { font-size: 11pt; }
+        #card .c-net:empty { display: none; }
+        body.mode-wifi .review-only { display: none !important; }
+        body:not(.mode-wifi) .wifi-only { display: none !important; }
+        body.mode-wifi .c-stars { display: none !important; }
+
         @media (max-width: 860px) {
             .layout { flex-direction: column; align-items: stretch; padding: 12px; }
             .panel { width: 100%; }
@@ -75,7 +84,7 @@
 <body>
 
     <div class="header-bar">
-        <h2>Generador de QR dinámicos</h2>
+        <h2>Generador de QR</h2>
         <a href="index.html" class="btn-back">&larr; Inicio</a>
     </div>
 
@@ -84,6 +93,14 @@
             <h3>1. Datos del negocio</h3>
 
             <div class="field">
+                <label>Tipo de QR</label>
+                <select id="mode">
+                    <option value="review">Reseña de Google (dinámico)</option>
+                    <option value="wifi">WiFi (estático)</option>
+                </select>
+            </div>
+
+            <div class="field review-only">
                 <label>Cargar un QR ya registrado (para reimprimir)</label>
                 <select id="existing"><option value="">— Nuevo QR —</option></select>
             </div>
@@ -96,6 +113,7 @@
                 <label>Cliente (quién te contrata)</label>
                 <input id="cliente" type="text" placeholder="Ej. Juan Pérez">
             </div>
+            <div class="stack review-only">
             <div class="field">
                 <label>Place ID</label>
                 <input id="placeid" type="text" placeholder="Pega aquí el Place ID de tu otra página">
@@ -112,6 +130,30 @@
                     <button class="btn gray" id="btn-regen" type="button" style="flex:0 0 auto">↻</button>
                 </div>
                 <span class="hint">Es lo que identifica este QR en tu Sheet. No lo cambies después de imprimir.</span>
+            </div>
+            </div>
+
+            <div class="stack wifi-only">
+                <div class="field">
+                    <label>Nombre de la red (SSID)</label>
+                    <input id="ssid" type="text" autocomplete="off" placeholder="Ej. Taqueria_Clientes">
+                </div>
+                <div class="field">
+                    <label>Contraseña</label>
+                    <input id="wpass" type="text" autocomplete="off" placeholder="Escríbela tal cual, respetando mayúsculas">
+                </div>
+                <div class="row" style="align-items:flex-end">
+                    <div class="field">
+                        <label>Seguridad</label>
+                        <select id="wsec">
+                            <option value="WPA" selected>WPA / WPA2 / WPA3</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">Sin contraseña</option>
+                        </select>
+                    </div>
+                    <label class="check" style="flex:0 0 auto"><input id="whidden" type="checkbox"> Red oculta</label>
+                </div>
+                <span class="hint">Si tienes duda, deja WPA: es lo que usa casi cualquier router actual.</span>
             </div>
 
             <h3>2. Diseño de impresión</h3>
@@ -146,32 +188,34 @@
                 <div class="c-sub" id="c-sub"></div>
                 <div class="c-qr" id="c-qr"></div>
                 <div class="c-stars">★★★★★</div>
+                <div class="c-net" id="c-net"></div>
                 <div class="c-foot" id="c-foot"></div>
             </div>
 
             <div class="panel" style="width:100%; max-width:520px;">
                 <h3>3. Registrar, probar e imprimir</h3>
 
-                <div class="field">
+                <div class="field review-only">
                     <label>URL que contiene el QR</label>
                     <div class="url-box" id="qr-url">—</div>
                 </div>
-                <div class="field">
+                <div class="field review-only">
                     <label>Destino actual al escanear</label>
                     <div class="url-box" id="dest-url" style="background:#f1f5f9;border-color:#94a3b8;color:#334155">—</div>
                 </div>
 
-                <div class="field">
+                <div class="field review-only">
                     <label>Clave de guardado (la misma que pusiste en Apps Script)</label>
                     <input id="token" type="password" placeholder="Solo si usas guardado automático">
                 </div>
 
-                <div class="btn-row">
+                <div class="btn-row review-only">
                     <button class="btn green" id="btn-save">Guardar en Sheet</button>
                     <button class="btn gray" id="btn-copyrow">Copiar fila</button>
                 </div>
+                <div class="status info wifi-only">Este QR es <b>estático</b>: la red y la contraseña van dentro del código y no pasan por tu Sheet. Si el cliente cambia la contraseña, hay que imprimir un QR nuevo. Pruébalo con un celular antes de imprimir.</div>
                 <div class="btn-row">
-                    <button class="btn gray" id="btn-test">Probar enlace</button>
+                    <button class="btn gray review-only" id="btn-test">Probar enlace</button>
                     <button class="btn" id="btn-png">Descargar PNG</button>
                     <button class="btn" id="btn-svg">Descargar SVG</button>
                     <button class="btn" id="btn-print">Imprimir</button>
@@ -181,8 +225,8 @@
 
                 <h3 style="margin-top:6px">Checklist de entrega</h3>
                 <div class="checklist">
-                    <label><input type="checkbox"> QR registrado en el Sheet</label>
-                    <label><input type="checkbox"> Probado con un celular (abre la reseña correcta)</label>
+                    <label class="review-only"><input type="checkbox"> QR registrado en el Sheet</label>
+                    <label><input type="checkbox"> Probado con un celular (abre la reseña o conecta al WiFi)</label>
                     <label><input type="checkbox"> Impreso y revisado (escanea desde 30 cm)</label>
                     <label><input type="checkbox"> Colocado / NFC configurado</label>
                     <label><input type="checkbox"> Entregado al cliente</label>
@@ -203,6 +247,11 @@
         // ================================
 
         const $ = id => document.getElementById(id);
+        let mode = "review";
+        const DEFAULTS = {
+            review: { sub: "¿Te gustó tu experiencia? Déjanos tu reseña", pie: "Escanea con tu cámara o acerca tu teléfono" },
+            wifi:   { sub: "Conéctate a nuestro WiFi", pie: "Escanea con tu cámara para conectarte" }
+        };
         let slugAuto = true;
         let suffix = rand();
 
@@ -212,6 +261,18 @@
                 .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 20);
         }
         function redirectBase() { return CONFIG.REDIRECT_URL || new URL("r.html", location.href).href; }
+        function wifiEscape(s) { return s.replace(/([\\;,:"])/g, "\\$1"); }
+        function wifiString() {
+            const ssid = $("ssid").value;
+            if (!ssid) return "";
+            const sec = $("wsec").value;
+            let s = "WIFI:T:" + sec + ";S:" + wifiEscape(ssid) + ";";
+            if (sec !== "nopass") s += "P:" + wifiEscape($("wpass").value) + ";";
+            if ($("whidden").checked) s += "H:true;";
+            return s + ";";
+        }
+        function qrContent() { return mode === "wifi" ? wifiString() : qrUrl(); }
+        function fileBase() { return mode === "wifi" ? "wifi-" + (slugify($("negocio").value) || "red") : slugValue(); }
         function slugValue() { return $("slug").value.trim().toLowerCase(); }
         function qrUrl() { return slugValue() ? redirectBase() + "?c=" + encodeURIComponent(slugValue()) : ""; }
         function destinoFinal() {
@@ -243,8 +304,9 @@
                 const base = slugify($("negocio").value);
                 $("slug").value = base ? base + "-" + suffix : "";
             }
-            const url = qrUrl();
+            const url = qrContent();
             $("card").className = $("size").value;
+            $("c-net").textContent = mode === "wifi" && $("ssid").value ? "Red: " + $("ssid").value : "";
             $("c-title").textContent = $("negocio").value.trim() || "Nombre del negocio";
             $("c-sub").textContent = $("subtitulo").value;
             $("c-foot").textContent = $("pie").value;
@@ -270,11 +332,11 @@
         }
 
         function downloadSvg() {
-            save(new Blob([buildSvg(qrUrl(), $("color").value)], { type: "image/svg+xml" }), slugValue() + ".svg");
+            save(new Blob([buildSvg(qrContent(), $("color").value)], { type: "image/svg+xml" }), fileBase() + ".svg");
         }
 
         function downloadPng() {
-            const svg = buildSvg(qrUrl(), $("color").value);
+            const svg = buildSvg(qrContent(), $("color").value);
             const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
             const img = new Image();
             img.onload = () => {
@@ -283,7 +345,7 @@
                 const ctx = c.getContext("2d");
                 ctx.imageSmoothingEnabled = false;
                 ctx.drawImage(img, 0, 0, 1200, 1200);
-                c.toBlob(b => save(b, slugValue() + ".png"));
+                c.toBlob(b => save(b, fileBase() + ".png"));
                 URL.revokeObjectURL(url);
             };
             img.src = url;
@@ -388,7 +450,7 @@
         }
 
         // ---- Eventos ----
-        ["negocio", "cliente", "placeid", "destino", "size", "color", "subtitulo", "pie"].forEach(id => $(id).addEventListener("input", render));
+        ["negocio", "cliente", "placeid", "destino", "size", "color", "subtitulo", "pie", "ssid", "wpass", "wsec", "whidden"].forEach(id => $(id).addEventListener("input", render));
         $("slug").addEventListener("input", () => { slugAuto = false; render(); });
         $("btn-regen").addEventListener("click", () => { suffix = rand(); slugAuto = true; render(); });
         $("existing").addEventListener("change", e => {
@@ -400,6 +462,17 @@
             $("placeid").value = r.place_id || "";
             $("destino").value = r.destino || "";
             $("slug").value = r.slug;
+            render();
+        });
+        $("mode").addEventListener("change", e => {
+            const old = mode;
+            mode = e.target.value;
+            document.body.classList.toggle("mode-wifi", mode === "wifi");
+            // Cambia los textos de la tarjeta solo si no los habías personalizado
+            if ($("subtitulo").value === DEFAULTS[old].sub) $("subtitulo").value = DEFAULTS[mode].sub;
+            if ($("pie").value === DEFAULTS[old].pie) $("pie").value = DEFAULTS[mode].pie;
+            setStatus("", "");
+            $("status").style.display = "none";
             render();
         });
         $("btn-save").addEventListener("click", saveToSheet);
@@ -416,4 +489,3 @@
     </script>
 </body>
 </html>
-
