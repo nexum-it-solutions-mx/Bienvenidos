@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de QR - Nexum</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f4f6f8; color: #1e293b; min-height: 100vh; }
+
+        .header-bar { display: flex; align-items: center; justify-content: space-between; background: #1a2332; color: #fff; padding: 12px 16px; }
+        .header-bar h2 { font-size: 1.1rem; }
+        .btn-back { background: #0088ff; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
+
+        .layout { display: flex; gap: 20px; padding: 20px; align-items: flex-start; max-width: 1100px; margin: 0 auto; }
+        .panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; width: 380px; flex-shrink: 0; display: flex; flex-direction: column; gap: 12px; }
+        .preview { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+        h3 { font-size: 0.95rem; color: #1a2332; }
+        .field { display: flex; flex-direction: column; gap: 4px; }
+        .field label { font-size: 0.78rem; font-weight: 600; color: #334155; }
+        .field input, .field select { padding: 9px; font-size: 0.88rem; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; background: #fff; color: #1e293b; }
+        .field input:focus, .field select:focus { border-color: #0088ff; }
+        .row { display: flex; gap: 8px; }
+        .row .field { flex: 1; }
+        .hint { font-size: 0.74rem; color: #64748b; line-height: 1.35; }
+
+        .btn { border: none; border-radius: 6px; padding: 10px 12px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: #fff; background: #0088ff; }
+        .btn.green { background: #10b981; }
+        .btn.gray { background: #64748b; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn-row .btn { flex: 1; min-width: 120px; }
+
+        .status { font-size: 0.8rem; padding: 8px 10px; border-radius: 6px; display: none; line-height: 1.4; }
+        .status.ok { display: block; background: #dcfce7; color: #166534; }
+        .status.err { display: block; background: #fee2e2; color: #991b1b; }
+        .status.info { display: block; background: #e0f2fe; color: #075985; }
+
+        .url-box { background: #e0f2fe; border: 1px dashed #0284c7; padding: 8px; border-radius: 6px; font-family: monospace; color: #0369a1; word-break: break-all; font-size: 0.78rem; }
+
+        .checklist { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; }
+        .checklist label { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+
+        /* ---- Tarjeta imprimible ---- */
+        #card { background: #fff; border: 1px solid #cbd5e1; box-shadow: 0 4px 14px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0.5cm; gap: 0.25cm; overflow: hidden; }
+        #card.s-sticker { width: 5cm; height: 5cm; padding: 0.3cm; }
+        #card.s-tarjeta { width: 8cm; height: 10cm; }
+        #card.s-a6 { width: 10.5cm; height: 14.8cm; padding: 0.8cm; gap: 0.4cm; }
+        #card .c-title { font-weight: 700; color: #111827; line-height: 1.15; }
+        #card .c-sub { color: #475569; line-height: 1.2; }
+        #card .c-foot { color: #64748b; }
+        #card .c-qr { width: 100%; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+        #card .c-qr svg { max-width: 100%; max-height: 100%; width: auto; height: 100%; aspect-ratio: 1 / 1; }
+        #card.s-sticker .c-title { font-size: 9pt; } #card.s-sticker .c-sub, #card.s-sticker .c-foot { font-size: 7pt; }
+        #card.s-tarjeta .c-title { font-size: 15pt; } #card.s-tarjeta .c-sub { font-size: 10pt; } #card.s-tarjeta .c-foot { font-size: 8.5pt; }
+        #card.s-a6 .c-title { font-size: 20pt; } #card.s-a6 .c-sub { font-size: 12pt; } #card.s-a6 .c-foot { font-size: 10pt; }
+        .c-stars { color: #f59e0b; letter-spacing: 2px; }
+        #card.s-sticker .c-stars { display: none; }
+
+        @media (max-width: 860px) {
+            .layout { flex-direction: column; align-items: stretch; padding: 12px; }
+            .panel { width: 100%; }
+        }
+
+        @media print {
+            @page { margin: 0; }
+            body * { visibility: hidden; }
+            #card, #card * { visibility: visible; }
+            body { background: #fff; }
+            #card { position: absolute; top: 0; left: 0; border: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <h2>Generador de QR dinámicos</h2>
+        <a href="index.html" class="btn-back">&larr; Inicio</a>
+    </div>
+
+    <div class="layout">
+        <div class="panel">
+            <h3>1. Datos del negocio</h3>
+
+            <div class="field">
+                <label>Cargar un QR ya registrado (para reimprimir)</label>
+                <select id="existing"><option value="">— Nuevo QR —</option></select>
+            </div>
+
+            <div class="field">
+                <label>Negocio</label>
+                <input id="negocio" type="text" placeholder="Ej. Taquería El Güero">
+            </div>
+            <div class="field">
+                <label>Cliente (quién te contrata)</label>
+                <input id="cliente" type="text" placeholder="Ej. Juan Pérez">
+            </div>
+            <div class="field">
+                <label>Place ID</label>
+                <input id="placeid" type="text" placeholder="Pega aquí el Place ID de tu otra página">
+            </div>
+            <div class="field">
+                <label>Destino personalizado (opcional)</label>
+                <input id="destino" type="text" placeholder="https://… (si lo dejas vacío se usa el Place ID)">
+            </div>
+
+            <div class="field">
+                <label>Código del QR (slug)</label>
+                <div class="row">
+                    <input id="slug" type="text" style="flex:1">
+                    <button class="btn gray" id="btn-regen" type="button" style="flex:0 0 auto">↻</button>
+                </div>
+                <span class="hint">Es lo que identifica este QR en tu Sheet. No lo cambies después de imprimir.</span>
+            </div>
+
+            <h3>2. Diseño de impresión</h3>
+            <div class="row">
+                <div class="field">
+                    <label>Tamaño</label>
+                    <select id="size">
+                        <option value="s-sticker">Sticker 5×5 cm</option>
+                        <option value="s-tarjeta" selected>Tarjeta 8×10 cm</option>
+                        <option value="s-a6">Cartel A6</option>
+                    </select>
+                </div>
+                <div class="field" style="flex:0 0 70px">
+                    <label>Color</label>
+                    <input id="color" type="color" value="#000000" style="padding:2px;height:38px">
+                </div>
+            </div>
+            <div class="field">
+                <label>Texto principal</label>
+                <input id="subtitulo" type="text" value="¿Te gustó tu experiencia? Déjanos tu reseña">
+            </div>
+            <div class="field">
+                <label>Pie</label>
+                <input id="pie" type="text" value="Escanea con tu cámara o acerca tu teléfono">
+            </div>
+            <span class="hint">Usa colores oscuros: un QR claro o de bajo contraste puede no escanear.</span>
+        </div>
+
+        <div class="preview">
+            <div id="card" class="s-tarjeta">
+                <div class="c-title" id="c-title">Nombre del negocio</div>
+                <div class="c-sub" id="c-sub"></div>
+                <div class="c-qr" id="c-qr"></div>
+                <div class="c-stars">★★★★★</div>
+                <div class="c-foot" id="c-foot"></div>
+            </div>
+
+            <div class="panel" style="width:100%; max-width:520px;">
+                <h3>3. Registrar, probar e imprimir</h3>
+
+                <div class="field">
+                    <label>URL que contiene el QR</label>
+                    <div class="url-box" id="qr-url">—</div>
+                </div>
+                <div class="field">
+                    <label>Destino actual al escanear</label>
+                    <div class="url-box" id="dest-url" style="background:#f1f5f9;border-color:#94a3b8;color:#334155">—</div>
+                </div>
+
+                <div class="field">
+                    <label>Clave de guardado (la misma que pusiste en Apps Script)</label>
+                    <input id="token" type="password" placeholder="Solo si usas guardado automático">
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn green" id="btn-save">Guardar en Sheet</button>
+                    <button class="btn gray" id="btn-copyrow">Copiar fila</button>
+                </div>
+                <div class="btn-row">
+                    <button class="btn gray" id="btn-test">Probar enlace</button>
+                    <button class="btn" id="btn-png">Descargar PNG</button>
+                    <button class="btn" id="btn-svg">Descargar SVG</button>
+                    <button class="btn" id="btn-print">Imprimir</button>
+                </div>
+
+                <div class="status" id="status"></div>
+
+                <h3 style="margin-top:6px">Checklist de entrega</h3>
+                <div class="checklist">
+                    <label><input type="checkbox"> QR registrado en el Sheet</label>
+                    <label><input type="checkbox"> Probado con un celular (abre la reseña correcta)</label>
+                    <label><input type="checkbox"> Impreso y revisado (escanea desde 30 cm)</label>
+                    <label><input type="checkbox"> Colocado / NFC configurado</label>
+                    <label><input type="checkbox"> Entregado al cliente</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+    <script>
+        // ======== CONFIGURACIÓN ========
+        const CONFIG = {
+            SHEET_ID: "PEGA_ID_DE_TU_SHEET",   // ID de tu Google Sheet
+            SHEET_NAME: "QRs",                 // Nombre de la pestaña
+            APPS_SCRIPT_URL: "",               // URL /exec de tu Apps Script (opcional)
+            REDIRECT_URL: ""                   // Déjalo vacío para usar r.html junto a esta página
+        };
+        // ================================
+
+        const $ = id => document.getElementById(id);
+        let slugAuto = true;
+        let suffix = rand();
+
+        function rand() { return Math.random().toString(36).slice(2, 6); }
+        function slugify(s) {
+            return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 20);
+        }
+        function redirectBase() { return CONFIG.REDIRECT_URL || new URL("r.html", location.href).href; }
+        function slugValue() { return $("slug").value.trim().toLowerCase(); }
+        function qrUrl() { return slugValue() ? redirectBase() + "?c=" + encodeURIComponent(slugValue()) : ""; }
+        function destinoFinal() {
+            const d = $("destino").value.trim(), p = $("placeid").value.trim();
+            if (d) return d;
+            return p ? "https://search.google.com/local/writereview?placeid=" + encodeURIComponent(p) : "";
+        }
+
+        function setStatus(type, msg) {
+            const el = $("status");
+            el.className = "status " + type;
+            el.textContent = msg;
+        }
+
+        function buildSvg(text, color) {
+            const qr = qrcode(0, "M");
+            qr.addData(text);
+            qr.make();
+            const n = qr.getModuleCount(), m = 4, size = n + m * 2;
+            let d = "";
+            for (let r = 0; r < n; r++)
+                for (let c = 0; c < n; c++)
+                    if (qr.isDark(r, c)) d += `M${c + m} ${r + m}h1v1h-1z`;
+            return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges"><rect width="${size}" height="${size}" fill="#ffffff"/><path d="${d}" fill="${color}"/></svg>`;
+        }
+
+        function render() {
+            if (slugAuto) {
+                const base = slugify($("negocio").value);
+                $("slug").value = base ? base + "-" + suffix : "";
+            }
+            const url = qrUrl();
+            $("card").className = $("size").value;
+            $("c-title").textContent = $("negocio").value.trim() || "Nombre del negocio";
+            $("c-sub").textContent = $("subtitulo").value;
+            $("c-foot").textContent = $("pie").value;
+            $("qr-url").textContent = url || "—";
+            $("dest-url").textContent = destinoFinal() || "Falta Place ID o destino";
+            $("c-qr").innerHTML = url ? buildSvg(url, $("color").value) : "";
+
+            const ready = !!url;
+            ["btn-save", "btn-copyrow", "btn-test", "btn-png", "btn-svg", "btn-print"].forEach(id => $(id).disabled = !ready);
+        }
+
+        function save(blob, name) {
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = name;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        }
+
+        function downloadSvg() {
+            save(new Blob([buildSvg(qrUrl(), $("color").value)], { type: "image/svg+xml" }), slugValue() + ".svg");
+        }
+
+        function downloadPng() {
+            const svg = buildSvg(qrUrl(), $("color").value);
+            const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+            const img = new Image();
+            img.onload = () => {
+                const c = document.createElement("canvas");
+                c.width = c.height = 1200;
+                const ctx = c.getContext("2d");
+                ctx.imageSmoothingEnabled = false;
+                ctx.drawImage(img, 0, 0, 1200, 1200);
+                c.toBlob(b => save(b, slugValue() + ".png"));
+                URL.revokeObjectURL(url);
+            };
+            img.src = url;
+        }
+
+        function rowData() {
+            return {
+                slug: slugValue(),
+                cliente: $("cliente").value.trim(),
+                negocio: $("negocio").value.trim(),
+                place_id: $("placeid").value.trim(),
+                destino: $("destino").value.trim(),
+                estado: "activo",
+                creado: new Date().toISOString().slice(0, 10),
+                notas: ""
+            };
+        }
+
+        async function copyRow() {
+            const d = rowData();
+            const line = [d.slug, d.cliente, d.negocio, d.place_id, d.destino, d.estado, d.creado, d.notas].join("\t");
+            try {
+                await navigator.clipboard.writeText(line);
+                setStatus("ok", "Fila copiada. Pégala en la primera fila vacía de tu hoja \"" + CONFIG.SHEET_NAME + "\".");
+            } catch (e) {
+                setStatus("err", "No se pudo copiar automáticamente.");
+            }
+        }
+
+        async function saveToSheet() {
+            if (!CONFIG.APPS_SCRIPT_URL) { await copyRow(); return; }
+            if (!destinoFinal()) { setStatus("err", "Falta el Place ID o un destino personalizado."); return; }
+            const token = $("token").value;
+            if (!token) { setStatus("err", "Escribe la clave de guardado."); return; }
+            try { localStorage.setItem("qr_token", token); } catch (e) {}
+
+            setStatus("info", "Guardando…");
+            try {
+                const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ token, ...rowData() })
+                });
+                const out = await res.json();
+                if (out.ok) { setStatus("ok", "Guardado en el Sheet. Ya puedes probar el enlace."); loadExisting(); }
+                else setStatus("err", "No se guardó: " + (out.error || "error desconocido"));
+            } catch (err) {
+                setStatus("info", "Se envió la solicitud pero no pude confirmarla. Revisa tu hoja para verificar que apareció la fila.");
+            }
+        }
+
+        // ---- Cargar QRs existentes ----
+        function parseCSV(text) {
+            const rows = []; let row = [], cur = "", q = false;
+            for (let i = 0; i < text.length; i++) {
+                const ch = text[i];
+                if (q) {
+                    if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+                    else cur += ch;
+                } else {
+                    if (ch === '"') q = true;
+                    else if (ch === ',') { row.push(cur); cur = ""; }
+                    else if (ch === '\n') { row.push(cur); rows.push(row); row = []; cur = ""; }
+                    else if (ch !== '\r') cur += ch;
+                }
+            }
+            if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
+            return rows;
+        }
+
+        let existingRows = [];
+        async function loadExisting() {
+            if (CONFIG.SHEET_ID.startsWith("PEGA_")) return;
+            try {
+                const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(CONFIG.SHEET_NAME)}&t=${Date.now()}`;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error();
+                const rows = parseCSV(await res.text());
+                const headers = rows[0].map(h => h.trim().toLowerCase());
+                existingRows = rows.slice(1).map(r => {
+                    const o = {};
+                    headers.forEach((h, i) => o[h] = (r[i] || "").trim());
+                    return o;
+                }).filter(r => r.slug);
+
+                const sel = $("existing");
+                sel.innerHTML = '<option value="">— Nuevo QR —</option>';
+                existingRows.forEach((r, i) => {
+                    const o = document.createElement("option");
+                    o.value = i;
+                    o.textContent = (r.negocio || r.slug) + " (" + r.slug + ")";
+                    sel.appendChild(o);
+                });
+            } catch (e) {
+                console.warn("No se pudo leer el Sheet. ¿Está compartido como 'Cualquiera con el enlace: lector'?");
+            }
+        }
+
+        // ---- Eventos ----
+        ["negocio", "cliente", "placeid", "destino", "size", "color", "subtitulo", "pie"].forEach(id => $(id).addEventListener("input", render));
+        $("slug").addEventListener("input", () => { slugAuto = false; render(); });
+        $("btn-regen").addEventListener("click", () => { suffix = rand(); slugAuto = true; render(); });
+        $("existing").addEventListener("change", e => {
+            if (e.target.value === "") { slugAuto = true; suffix = rand(); render(); return; }
+            const r = existingRows[+e.target.value];
+            slugAuto = false;
+            $("negocio").value = r.negocio || "";
+            $("cliente").value = r.cliente || "";
+            $("placeid").value = r.place_id || "";
+            $("destino").value = r.destino || "";
+            $("slug").value = r.slug;
+            render();
+        });
+        $("btn-save").addEventListener("click", saveToSheet);
+        $("btn-copyrow").addEventListener("click", copyRow);
+        $("btn-test").addEventListener("click", () => window.open(qrUrl(), "_blank", "noopener"));
+        $("btn-png").addEventListener("click", downloadPng);
+        $("btn-svg").addEventListener("click", downloadSvg);
+        $("btn-print").addEventListener("click", () => window.print());
+
+        try { $("token").value = localStorage.getItem("qr_token") || ""; } catch (e) {}
+        if (location.protocol === "file:") setStatus("info", "Estás abriendo el archivo desde tu disco: el QR apuntaría a una ruta local. Genera los QR desde tu página ya publicada en GitHub Pages.");
+        render();
+        loadExisting();
+    </script>
+</body>
+</html>

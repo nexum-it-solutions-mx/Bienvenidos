@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Redirigiendo…</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #f4f6f8; color: #1a2332; text-align: center; padding: 24px; }
+        .box { max-width: 360px; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #cbd5e1; border-top-color: #0088ff; border-radius: 50%; margin: 0 auto 16px; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        p { color: #475569; font-size: 0.95rem; line-height: 1.5; }
+        h1 { font-size: 1.1rem; margin-bottom: 8px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="spinner" id="spinner"></div>
+        <h1 id="title">Un momento…</h1>
+        <p id="msg">Te estamos llevando a la página de reseñas.</p>
+    </div>
+
+    <script>
+        // ======== CONFIGURACIÓN ========
+        const CONFIG = {
+            SHEET_ID: "PEGA_ID_DE_TU_SHEET",   // El texto largo entre /d/ y /edit en la URL del Sheet
+            SHEET_NAME: "QRs"                  // Nombre exacto de la pestaña
+        };
+        // ================================
+
+        function parseCSV(text) {
+            const rows = []; let row = [], cur = "", q = false;
+            for (let i = 0; i < text.length; i++) {
+                const ch = text[i];
+                if (q) {
+                    if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+                    else cur += ch;
+                } else {
+                    if (ch === '"') q = true;
+                    else if (ch === ',') { row.push(cur); cur = ""; }
+                    else if (ch === '\n') { row.push(cur); rows.push(row); row = []; cur = ""; }
+                    else if (ch !== '\r') cur += ch;
+                }
+            }
+            if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
+            return rows;
+        }
+
+        async function loadRows() {
+            const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(CONFIG.SHEET_NAME)}&t=${Date.now()}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error("No se pudo leer la hoja");
+            const rows = parseCSV(await res.text());
+            const headers = rows[0].map(h => h.trim().toLowerCase());
+            return rows.slice(1).map(r => {
+                const o = {};
+                headers.forEach((h, i) => o[h] = (r[i] || "").trim());
+                return o;
+            });
+        }
+
+        function fail(title, msg) {
+            document.getElementById("spinner").classList.add("hidden");
+            document.getElementById("title").textContent = title;
+            document.getElementById("msg").textContent = msg;
+        }
+
+        (async function () {
+            const slug = (new URLSearchParams(location.search).get("c") || "").trim().toLowerCase();
+            if (!slug) return fail("QR incompleto", "Este enlace no tiene un código válido.");
+
+            try {
+                const rows = await loadRows();
+                const row = rows.find(r => (r.slug || "").toLowerCase() === slug);
+                if (!row) return fail("QR no encontrado", "Este código no está registrado.");
+
+                const estado = (row.estado || "activo").toLowerCase();
+                if (["pausado", "inactivo", "baja"].includes(estado)) {
+                    return fail("QR desactivado", "Este código está temporalmente fuera de servicio.");
+                }
+
+                let destino = row.destino;
+                if (!destino && row.place_id) {
+                    destino = "https://search.google.com/local/writereview?placeid=" + encodeURIComponent(row.place_id);
+                }
+                if (!destino || !/^https?:\/\//i.test(destino)) {
+                    return fail("Sin destino", "Este QR todavía no tiene un destino configurado.");
+                }
+                location.replace(destino);
+            } catch (err) {
+                console.error(err);
+                fail("No pudimos cargar la página", "Revisa tu conexión e inténtalo de nuevo.");
+            }
+        })();
+    </script>
+</body>
+</html>
