@@ -254,6 +254,11 @@
 
             const ready = !!url;
             ["btn-save", "btn-copyrow", "btn-test", "btn-png", "btn-svg", "btn-print"].forEach(id => $(id).disabled = !ready);
+            $("btn-save").textContent = slugExists() ? "Actualizar en Sheet" : "Guardar en Sheet";
+        }
+
+        function slugExists() {
+            return existingRows.some(r => (r.slug || "").toLowerCase() === slugValue());
         }
 
         function save(blob, name) {
@@ -309,21 +314,26 @@
         }
 
         async function saveToSheet() {
-            if (!CONFIG.APPS_SCRIPT_URL) { await copyRow(); return; }
+            const isUpdate = slugExists();
+            if (!CONFIG.APPS_SCRIPT_URL) {
+                if (isUpdate) setStatus("info", "Este QR ya existe. Edita directamente su fila en el Sheet (columna destino o place_id).");
+                else await copyRow();
+                return;
+            }
             if (!destinoFinal()) { setStatus("err", "Falta el Place ID o un destino personalizado."); return; }
             const token = $("token").value;
             if (!token) { setStatus("err", "Escribe la clave de guardado."); return; }
             try { localStorage.setItem("qr_token", token); } catch (e) {}
 
-            setStatus("info", "Guardando…");
+            setStatus("info", isUpdate ? "Actualizando…" : "Guardando…");
             try {
                 const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify({ token, ...rowData() })
+                    body: JSON.stringify({ token, update: isUpdate, ...rowData() })
                 });
                 const out = await res.json();
-                if (out.ok) { setStatus("ok", "Guardado en el Sheet. Ya puedes probar el enlace."); loadExisting(); }
+                if (out.ok) { setStatus("ok", isUpdate ? "QR actualizado. El mismo QR impreso ya lleva al nuevo destino." : "Guardado en el Sheet. Ya puedes probar el enlace."); await loadExisting(); render(); }
                 else setStatus("err", "No se guardó: " + (out.error || "error desconocido"));
             } catch (err) {
                 setStatus("info", "Se envió la solicitud pero no pude confirmarla. Revisa tu hoja para verificar que apareció la fila.");
@@ -406,3 +416,4 @@
     </script>
 </body>
 </html>
+
