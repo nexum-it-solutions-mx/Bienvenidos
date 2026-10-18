@@ -12,10 +12,9 @@
         .header-bar { display: flex; align-items: center; justify-content: space-between; background: #1a2332; color: #fff; padding: 12px 16px; z-index: 10; flex-shrink: 0; }
         .header-bar h2 { font-size: 1.1rem; }
         .btn-back { background: #0088ff; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
-
         .header-links { display: flex; gap: 8px; }
         .btn-qr { background: #10b981; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
-        
+
         .container { display: flex; flex: 1; position: relative; overflow: hidden; flex-direction: row; }
         #map { flex: 1; width: 100%; height: 100%; }
 
@@ -49,12 +48,18 @@
 <body>
 
     <div class="header-bar">
-    <h2>Obtener Place ID</h2>
-    <div class="header-links">
-        <a href="qr-generador.html" class="btn-qr">Crear QR &rarr;</a>
-        <a href="index.html" class="btn-back">&larr; Inicio</a>
+        <h2>Obtener Place ID</h2>
+        <div class="header-links">
+            <a href="qr-generador.html" class="btn-qr">Crear QR &rarr;</a>
+            <a href="index.html" class="btn-back">&larr; Inicio</a>
+        </div>
     </div>
-</div>
+
+    <div class="container">
+        <div class="search-container" id="search-container"></div>
+
+        <div id="map"></div>
+
         <div class="sidebar">
             <div class="error-msg" id="error-msg"></div>
 
