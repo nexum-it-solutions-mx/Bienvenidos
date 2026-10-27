@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexum | Generador de QR con Logotipo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Librería QRCode.js con soporte de nivel H -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #0a101d;
+      --card-bg: rgba(13, 23, 38, 0.85);
+      --card-border: rgba(0, 210, 255, 0.25);
+      --cyan-neon: #00d2ff;
+      --silver-main: #e2e8f0;
+      --silver-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
+
+    body {
+      background: radial-gradient(ellipse at 50% 10%, rgba(30, 107, 245, 0.25), transparent 70%), var(--bg-dark);
+      color: var(--silver-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 16px;
+    }
+
+    .header-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .header-title h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .header-title span {
+      color: var(--cyan-neon);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    @media (max-width: 768px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--silver-main);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--cyan-neon);
+      box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+    }
+
+    .btn-generate {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #1e6bf5, var(--cyan-neon));
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 28px rgba(0, 210, 255, 0.5);
+    }
+
+    .preview-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+    }
+
+    #canvas-container {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
+    }
+
+    #qr-canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .btn-download {
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--cyan-neon);
+      color: var(--cyan-neon);
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-download:hover {
+      background: var(--cyan-neon);
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-title">
+    <span>Servicio Adicional Nexum</span>
+    <h1>Generador de QR con Logotipo Integrado</h1>
+  </div>
+
+  <div class="main-grid">
+    <!-- Formulario de Configuración -->
+    <div class="panel">
+      <div class="form-group">
+        <label><i class="fa-solid fa-link"></i> Enlace o URL de Destino:</label>
+        <input type="text" id="qr-text" class="form-control" value="https://tu-usuario.github.io/tu-repo/r/?id=bichoburger" placeholder="Ej: https://..." />
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-image"></i> Cargar Logotipo del Cliente (PNG/JPG):</label>
+        <input type="file" id="logo-file" class="form-control" accept="image/*" />
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-palette"></i> Color de Módulos QR:</label>
+        <input type="color" id="qr-color" class="form-control" value="#000000" style="height: 45px; cursor: pointer;" />
+      </div>
+
+      <button class="btn-generate" onclick="procesarQR()">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <span>Generar QR con Marca</span>
+      </button>
+    </div>
+
+    <!-- Previsualización y Descarga -->
+    <div class="panel preview-box">
+      <div id="canvas-container">
+        <canvas id="qr-canvas" width="380" height="380"></canvas>
+      </div>
+
+      <button class="btn-download" onclick="descargarQR()">
+        <i class="fa-solid fa-download"></i> Descargar Imagen para Impresión (PNG HD)
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function procesarQR() {
+      const texto = document.getElementById('qr-text').value.trim();
+      const color = document.getElementById('qr-color').value;
+      const logoInput = document.getElementById('logo-file');
+      const canvas = document.getElementById('qr-canvas');
+      const ctx = canvas.getContext('2d');
+
+      if (!texto) {
+        alert("Ingresa una URL válida para generar el código QR.");
+        return;
+      }
+
+      // 1. Generar la matriz QR base en un elemento oculto usando Nivel H (30% Corrección de Error)
+      const tempDiv = document.createElement('div');
+      new QRCode(tempDiv, {
+        text: texto,
+        width: 380,
+        height: 380,
+        colorDark: color,
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      setTimeout(() => {
+        const qrImg = tempDiv.querySelector('img');
+        if (!qrImg) return;
+
+        // Limpiar Canvas y dibujar el QR generado
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, 380, 380);
+        ctx.drawImage(qrImg, 0, 0, 380, 380);
+
+        // 2. Dibujar zona de protección central (Quiet Zone)
+        const size = 100;
+        const x = (380 - size) / 2;
+        const y = (380 - size) / 2;
+
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(190, 190, (size / 2) + 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 3. Si el usuario subió un logo, dibujarlo al centro
+        if (logoInput.files && logoInput.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const logo = new Image();
+            logo.onload = function() {
+              ctx.drawImage(logo, x, y, size, size);
+            };
+            logo.src = e.target.result;
+          };
+          reader.readAsDataURL(logoInput.files[0]);
+        }
+      }, 150);
+    }
+
+    function descargarQR() {
+      const canvas = document.getElementById('qr-canvas');
+      const link = document.createElement('a');
+      link.download = 'QR_Nexum_Personalizado.png';
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    // Inicializar generación de prueba al cargar la página
+    window.onload = procesarQR;
+  </script>
+</body>
+</html>
