@@ -876,38 +876,55 @@
                   <input type="hidden" name="access_key" value="00540b1a-8ca5-455c-817f-851c745b6f1d">
                   <input type="hidden" name="subject" value="Nueva Cotización de Landing Page - Nexum IT">
 
-                  <div class="form-group">
-                    <label for="landing-nombre">Nombre completo / Negocio</label>
-                    <input type="text" name="nombre_cliente" id="landing-nombre" placeholder="Ej. Taquería El Sol" required>
-                  </div>
+                  <div class="custom-solution-body">
+  <form class="custom-contact-form" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="00540b1a-8ca5-455c-817f-851c745b6f1d">
+    <input type="hidden" name="subject" value="Nueva Cotización de Landing Page - Nexum IT">
 
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label for="landing-email">Correo Electrónico</label>
-                      <input type="email" name="email" id="landing-email" placeholder="ejemplo@correo.com" required>
-                    </div>
-                    <div class="form-group">
-                      <label for="landing-tel">Teléfono / WhatsApp</label>
-                      <input type="tel" name="telefono" id="landing-tel" placeholder="33 1234 5678" required>
-                    </div>
-                  </div>
+    <div class="form-group">
+      <label for="landing-nombre">Nombre completo / Negocio</label>
+      <input type="text" name="nombre_cliente" id="landing-nombre" placeholder="Ej. Taquería El Sol" required>
+    </div>
 
-                  <div class="form-group">
-                    <label for="landing-mensaje">Detalles de tu proyecto</label>
-                    <textarea name="mensaje_necesidad" id="landing-mensaje" rows="3" placeholder="Quiero un menú digital..." required></textarea>
-                  </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="landing-email">Correo Electrónico</label>
+        <input type="email" name="email" id="landing-email" placeholder="ejemplo@correo.com" required>
+      </div>
+      <div class="form-group">
+        <label for="landing-tel">Teléfono / WhatsApp</label>
+        <input type="tel" name="telefono" id="landing-tel" placeholder="33 1234 5678" required>
+      </div>
+    </div>
 
-                  <button type="submit" class="btn-submit-form">Enviar Información al Correo ✉️</button>
-                </form>
+    <div class="form-group">
+      <label for="landing-mensaje">Detalles de tu proyecto</label>
+      <textarea name="mensaje_necesidad" id="landing-mensaje" rows="3" placeholder="Quiero un menú digital..." required></textarea>
+    </div>
 
-                <div class="quick-contact-box">
-                  <div class="quick-divider"><span>O ATENCIÓN INMEDIATA</span></div>
-                  <a href="https://wa.me/525628470586?text=Hola,%20quisiera%20cotizar%20una%20landing%20page%20a%20medida." target="_blank" class="btn-whatsapp-quote">
-                    <span>💬 Cotizar por WhatsApp</span>
-                  </a>
-                </div>
-              </div>
-            </div>
+    <!-- BLOQUE DE ACEPTACIÓN LEGAL -->
+    <div class="form-legal-consent" style="margin: 15px 0; font-size: 0.85em; color: #aaa; text-align: left; line-height: 1.4;">
+      <label style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; cursor: pointer;">
+        <input type="checkbox" name="acepta_privacidad_y_terminos" value="SI" required style="margin-top: 3px;">
+        <span>He leído y acepto el <a href="https://nexum-it-solutions-mx.github.io/Bienvenidos/legal.html#privacidad" target="_blank" rel="noopener" style="color: #fff; text-decoration: underline;">Aviso de Privacidad</a> y los <a href="https://nexum-it-solutions-mx.github.io/Bienvenidos/legal.html#terminos" target="_blank" rel="noopener" style="color: #fff; text-decoration: underline;">Términos y Condiciones</a>.</span>
+      </label>
+
+      <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+        <input type="checkbox" name="acepta_publicidad" value="SI" style="margin-top: 3px;">
+        <span>Acepto recibir comunicaciones comerciales o novedades de Nexum IT Solutions (Opcional).</span>
+      </label>
+    </div>
+
+    <button type="submit" class="btn-submit-form">Enviar Información al Correo ✉️</button>
+  </form>
+
+  <div class="quick-contact-box">
+    <div class="quick-divider"><span>O ATENCIÓN INMEDIATA</span></div>
+    <a href="https://wa.me/525628470586?text=Hola,%20quisiera%20cotizar%20una%20landing%20page%20a%20medida." target="_blank" class="btn-whatsapp-quote">
+      <span>💬 Cotizar por WhatsApp</span>
+    </a>
+  </div>
+</div>            </div>
           </div>
 
         </div>
