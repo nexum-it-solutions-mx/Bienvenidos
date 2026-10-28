@@ -902,21 +902,20 @@
       <textarea name="mensaje_necesidad" id="landing-mensaje" rows="3" placeholder="Quiero un menú digital..." required></textarea>
     </div>
 
-    <!-- BLOQUE DE ACEPTACIÓN LEGAL -->
-    <div class="form-legal-consent" style="margin: 15px 0; font-size: 0.85em; color: #aaa; text-align: left; line-height: 1.4;">
-      <label style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; cursor: pointer;">
-        <input type="checkbox" name="acepta_privacidad_y_terminos" value="SI" required style="margin-top: 3px;">
-        <span>He leído y acepto el <a href="https://nexum-it-solutions-mx.github.io/Bienvenidos/legal.html#privacidad" target="_blank" rel="noopener" style="color: #fff; text-decoration: underline;">Aviso de Privacidad</a> y los <a href="https://nexum-it-solutions-mx.github.io/Bienvenidos/legal.html#terminos" target="_blank" rel="noopener" style="color: #fff; text-decoration: underline;">Términos y Condiciones</a>.</span>
-      </label>
+   <!-- BLOQUE DE ACEPTACIÓN LEGAL CORREGIDO -->
+<div class="form-group legal-consent-group" style="margin: 15px 0 20px 0;">
+  <label style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; cursor: pointer; text-align: left; font-size: 0.85em; color: #aaa;">
+    <input type="checkbox" name="acepta_privacidad_y_terminos" value="SI" required style="margin-top: 3px; flex-shrink: 0;">
+    <span>He leído y acepto el <a href="https://nexum-it-solutions-mx.github.io/Bienvenidos/legal.html#privacidad" target="_blank" rel="noopener" style="color: #fff; text-decoration: underline;">Aviso de Privacidad</a> y los <a href="https://nexum-it-solutions-mx.github.io/Bienvenidos/legal.html#terminos" target="_blank" rel="noopener" style="color: #fff; text-decoration: underline;">Términos y Condiciones</a>.</span>
+  </label>
 
-      <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
-        <input type="checkbox" name="acepta_publicidad" value="SI" style="margin-top: 3px;">
-        <span>Acepto recibir comunicaciones comerciales o novedades de Nexum IT Solutions (Opcional).</span>
-      </label>
-    </div>
+  <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; text-align: left; font-size: 0.85em; color: #aaa;">
+    <input type="checkbox" name="acepta_publicidad" value="SI" style="margin-top: 3px; flex-shrink: 0;">
+    <span>Acepto recibir comunicaciones comerciales o novedades de Nexum IT Solutions (Opcional).</span>
+  </label>
+</div>
 
-    <button type="submit" class="btn-submit-form">Enviar Información al Correo ✉️</button>
-  </form>
+<button type="submit" class="btn-submit-form">Enviar Información al Correo</button>  </form>
 
   <div class="quick-contact-box">
     <div class="quick-divider"><span>O ATENCIÓN INMEDIATA</span></div>
