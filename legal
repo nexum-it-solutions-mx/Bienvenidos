@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro Legal - Nexum IT Solutions</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; }
+    h1 { color: #14233C; border-bottom: 2px solid #14233C; padding-bottom: 10px; }
+    h2 { color: #234B78; margin-top: 30px; }
+    .legal-section { margin-bottom: 40px; background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+    .footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #666; }
+  </style>
+</head>
+<body>
+
+  <h1>Centro Legal — Nexum IT Solutions</h1>
+  <p><em>Última actualización: Octubre 2026 | Cumplimiento LFPDPPP, LFPC y Código de Comercio.</em></p>
+
+  <!-- SECCIÓN 1: AVISO DE PRIVACIDAD -->
+  <div id="privacidad" class="legal-section">
+    <h2>1. Aviso de Privacidad Integral Multimarca</h2>
+    <p><strong>Identidad y Domicilio del Responsable:</strong> Eduardo Adrián Reyes Pérez, operando bajo la marca <strong>NEXUM IT SOLUTIONS</strong>, con domicilio en Guadalajara, Jalisco, México (contacto@nexumitsolutions.mx), es el responsable del tratamiento de sus datos personales para las unidades: Nexum Web, Nexum Tech (fidelización, agendas virtuales, capacitaciones), Nexum Business, Nexum Pro y Nexum Tags (identificación NFC/QR para mascotas, adultos mayores, niños y centros de salud/hospitales).</p>
+    
+    <p><strong>Datos Personales que se Recaban:</strong></p>
+    <ul>
+      <li><strong>Servicios Web, Fidelización y Agendas:</strong> Nombre, correo, teléfono, datos fiscales, dirección de entrega y datos de citas o historial de puntos.</li>
+      <li><strong>Nexum Tech:</strong> Nombre, correo electrónico y datos de facturación.</li>
+      <li><strong>Nexum Tags:</strong> Nombre de la persona o mascota, contacto de emergencia, tipo de sangre y datos médicos o alergias esenciales (previa autorización explícita para adultos mayores, niños o centros médicos).</li>
+    </ul>
+
+    <p><strong>Finalidades del Tratamiento:</strong> Proveer desarrollos web, vincular tags NFC/QR, gestionar agendas virtuales, operar programas de fidelización, mantener perfiles de emergencia en Nexum Tags, soporte técnico y facturación.</p>
+    <p><strong>Derechos ARCO:</strong> Puede ejercer sus derechos de Acceso, Rectificación, Cancelación u Oposición enviando un correo a <strong>contacto@nexumitsolutions.mx</strong>.</p>
+  </div>
+
+  <!-- SECCIÓN 2: TÉRMINOS Y CONDICIONES -->
+  <div id="terminos" class="legal-section">
+    <h2>2. Términos y Condiciones Generales de Servicio</h2>
+    <p><strong>Ámbito de Aplicación:</strong> Aplica a los servicios prestados por Nexum IT Solutions a través de sus unidades Nexum Web, Nexum Tech, Nexum Business, Nexum Pro y Nexum Tags.</p>
+    <p><strong>Garantía de Equipamiento:</strong> Los tótems físicos y tags NFC/QR cuentan con 12 meses de garantía técnica por defectos de fábrica del chip.</p>
+    <p><strong>Nexum Tags y Emergencias:</strong> El cliente o tutor es responsable de la veracidad de los datos configurados en los tags. Nexum Tags es un canal tecnológico de enlace y no sustituye servicios médicos o de emergencia pública.</p>
+    <p><strong>Responsabilidad en Agendas y Fidelidad:</strong> El cliente es responsable de garantizar la precisión de horarios en agendas y promociones en programas de fidelidad.</p>
+    <p><strong>Jurisdicción:</strong> Para cualquier controversia, las partes se someten a los Tribunales de Guadalajara, Jalisco.</p>
+  </div>
+
+  <!-- SECCIÓN 3: COOKIES Y REGISTROS -->
+  <div id="cookies" class="legal-section">
+    <h2>3. Política de Cookies y Registros de Auditoría</h2>
+    <p>Utilizamos cookies técnicas necesarias para mantener la sesión en agendas virtuales y cargar perfiles de Nexum Tags, así como cookies analíticas para medir el rendimiento de nuestros sitios.</p>
+    <p><strong>Registro de Consentimiento:</strong> Al aceptar nuestras políticas, nuestros servidores almacenan una bitácora con la fecha, hora UTC, dirección IP y versión aceptada para fines de cumplimiento legal.</p>
+  </div>
+
+  <div class="footer">
+    <p>© Nexum IT Solutions — Guadalajara, Jalisco, México</p>
+  </div>
+
+</body>
+</html>
